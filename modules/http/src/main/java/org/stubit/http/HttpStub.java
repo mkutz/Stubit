@@ -11,9 +11,7 @@ public class HttpStub implements AutoCloseable {
   private final HttpServer httpServer;
   private final Map<String, String> resourceMap = new HashMap<>();
 
-    /**
-     * Creates and starts the HttpStub with an empty {@link #resourceMap}.
-     */
+  /** Creates and starts the HttpStub with an empty {@link #resourceMap}. */
   public HttpStub() {
     try {
       httpServer = HttpServer.create(new InetSocketAddress(0), 0);
@@ -40,30 +38,31 @@ public class HttpStub implements AutoCloseable {
     }
   }
 
-    /**
-     * @return the {@link HttpStub} base address
-     */
+  /**
+   * @return the {@link HttpStub} base address
+   */
   public String address() {
     return String.format("http://localhost:%d", httpServer.getAddress().getPort());
   }
 
-    /**
-     * Adds a new path and body to be returned.
-     * 
-     * @param path the path the given body should be returned at
-     * @param body the body to be returned
-     * @return this
-     */
+  /**
+   * Adds a new path and body to be returned.
+   *
+   * @param path the path the given body should be returned at
+   * @param body the body to be returned
+   * @return this
+   */
   public HttpStub add(String path, String body) {
     resourceMap.put(path, body);
     return this;
   }
 
-    /**
-     * Adds the given map to the {@link #resourceMap}
-     * @param map new entries for the {@link #resourceMap}
-     * @return this
-     */
+  /**
+   * Adds the given map to the {@link #resourceMap}
+   *
+   * @param map new entries for the {@link #resourceMap}
+   * @return this
+   */
   public HttpStub add(Map<String, String> map) {
     resourceMap.putAll(map);
     return this;

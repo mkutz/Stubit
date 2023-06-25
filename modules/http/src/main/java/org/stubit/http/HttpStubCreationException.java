@@ -2,9 +2,7 @@ package org.stubit.http;
 
 import java.io.IOException;
 
-/**
- * Exception for startup failures.
- */
+/** Exception for startup failures. */
 public class HttpStubCreationException extends RuntimeException {
 
   /**
