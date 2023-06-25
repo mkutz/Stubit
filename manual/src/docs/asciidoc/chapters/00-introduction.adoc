@@ -1,0 +1,5 @@
+= Introduction
+
+== Stubit
+
+Stubit is a collection of extremely simple stubs to replace typical infrastructure dependencies.

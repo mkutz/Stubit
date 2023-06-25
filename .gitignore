@@ -1,0 +1,10 @@
+.gradle
+build
+out
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+.idea
+!.idea/icon.png
+docs/**
+.jqwik-database

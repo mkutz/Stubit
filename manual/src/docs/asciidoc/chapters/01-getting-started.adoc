@@ -1,0 +1,65 @@
+= Getting Started
+
+== Requirements
+
+In oder to use Shakespeare you need a JDK 17 or higher.
+
+== Dependencies
+
+To use Stubit in your own project, you need to add it as a dependency to your project.
+
+.Gradle
+[source,groovy,subs=attributes+,role="primary"]
+----
+implementation 'org.stubit:http:{revnumber}'
+----
+
+.Maven
+[source,xml,subs=attributes+,role="secondary"]
+----
+<dependency>
+  <groupId>org.stubit</groupId>
+  <artifactId>http</artifactId>
+  <version>{revnumber}</version>
+</dependency>
+----
+
+NOTE: The `http` is an example module.
+
+=== Bill of Materials
+
+If you want to use more than one module in the same project, you can use Shakespeare's bill of materials (BOM) and omit the explicit version for the other modules.
+
+.Gradle
+[source,groovy,subs=attributes+,role="primary"]
+----
+implementation platform('org.stubit:bom:{revnumber}')
+implementation 'org.stubit:http'
+----
+
+.Maven
+[source,xml,subs=attributes+,role="secondary"]
+----
+<project>
+  <!--…-->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.stubit</groupId>
+        <artifactId>bom</artifactId>
+        <version>{revnumber}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <!-- … -->
+  <dependencies>
+    <dependency>
+      <groupId>org.stubit</groupId>
+      <artifactId>http</artifactId>
+    </dependency>
+  </dependencies>
+  <!-- … -->
+</project>
+----
