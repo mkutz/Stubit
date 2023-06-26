@@ -1,12 +1,10 @@
 plugins { id("com.diffplug.spotless") }
 
-repositories {
-  mavenCentral()
-}
+repositories { mavenCentral() }
 
 spotless {
   format("misc") {
-    target("**/*.md", "**/*.xml", "**/*.yml", "**/*.yaml", ".gitignore")
+    target("**/*.md", "**/*.xml", "**/*.yml", "**/*.yaml", "**/*.html", "**/*.css", ".gitignore")
     targetExclude("**/build/**/*", "**/.idea/**")
     trimTrailingWhitespace()
     endWithNewline()
@@ -27,7 +25,5 @@ spotless {
     ktfmt().googleStyle()
   }
 
-  freshmark {
-    target("*.md")
-  }
+  freshmark { target("*.md") }
 }

@@ -6,7 +6,5 @@ plugins {
 java {
   withJavadocJar()
   withSourcesJar()
-  toolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
-  }
+  toolchain { languageVersion.set(JavaLanguageVersion.of(11)) }
 }

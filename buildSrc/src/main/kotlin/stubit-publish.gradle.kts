@@ -10,7 +10,9 @@ publishing {
       from(components.findByName("java") ?: components.getByName("javaPlatform"))
       pom {
         project.properties["mavenPomName"]?.let { displayName -> name.set(displayName.toString()) }
-        project.properties["mavenPomDescription"]?.let { displayName -> description.set(displayName.toString()) }
+        project.properties["mavenPomDescription"]?.let { displayName ->
+          description.set(displayName.toString())
+        }
         url.set("https://stubit.org")
         licenses {
           license {
@@ -37,6 +39,9 @@ publishing {
 
 signing {
   isRequired = !version.toString().endsWith("SNAPSHOT")
-  useInMemoryPgpKeys(findProperty("signingKey")?.toString(), findProperty("signingPassword")?.toString())
+  useInMemoryPgpKeys(
+    findProperty("signingKey")?.toString(),
+    findProperty("signingPassword")?.toString()
+  )
   sign(publishing.publications[name])
 }

@@ -1,0 +1,56 @@
+name: Update Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'manual/**'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Ensure base directory
+        run: mkdir -p pages/docs/${{ github.ref_name }}
+
+      - name: Update AsciiDoc
+        run: |
+          ./gradlew asciidoc
+          rm -rf pages/docs/${{ github.ref_name }}/manual
+          mv manual/build/docs/asciidoc pages/docs/${{ github.ref_name }}/manual
+
+      - name: Update JavaDoc
+        run: |
+          ./gradlew javadoc
+          rm -rf pages/docs/${{ github.ref_name }}/javadoc
+          mkdir pages/docs/${{ github.ref_name }}/javadoc
+          mv modules/http/build/docs/javadoc pages/docs/${{ github.ref_name }}/javadoc/http
+
+      - uses: actions/configure-pages@v3
+
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./pages
+
+      - id: deployment
+        uses: actions/deploy-pages@v2
