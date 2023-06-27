@@ -6,7 +6,10 @@ plugins {
 
 dependencies {
   constraints {
-    (parent?.subprojects)?.filter { it != project }?.sortedBy { it.name }?.forEach { api(it) }
+    (parent?.subprojects)
+      ?.filter { it != project && it.name != "manual" && it.subprojects.isEmpty() }
+      ?.sortedBy { it.name }
+      ?.forEach { api(it) }
   }
 }
 
