@@ -3,3 +3,5 @@
 == Stubit
 
 Stubit is a collection of extremely simple stubs to replace typical infrastructure dependencies.
+
+To review the code, file issues or suggest changes, please visit the project's link:https://github.com/mkutz/stubit[GitHub page].
