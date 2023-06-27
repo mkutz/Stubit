@@ -2,7 +2,7 @@
 
 == Requirements
 
-In oder to use Shakespeare you need a JDK 17 or higher.
+In oder to use Stubit you need a JDK 17 or higher.
 
 == Dependencies
 
@@ -28,7 +28,7 @@ NOTE: The `http` is an example module.
 
 === Bill of Materials
 
-If you want to use more than one module in the same project, you can use Shakespeare's bill of materials (BOM) and omit the explicit version for the other modules.
+If you want to use more than one module in the same project, you can use Stubit's bill of materials (BOM) and omit the explicit version for the other modules.
 
 .Gradle
 [source,groovy,subs=attributes+,role="primary"]

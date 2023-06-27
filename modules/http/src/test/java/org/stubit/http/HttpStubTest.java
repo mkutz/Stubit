@@ -13,37 +13,61 @@ class HttpStubTest {
 
   @Test
   void get_resource() throws Exception {
-    HttpResponse<String> httpResponse;
     try (var httpStub = new HttpStub().add("/things/some-key", "some thing")) {
-      final var httpClient = HttpClient.newHttpClient();
+      var httpClient = HttpClient.newHttpClient();
 
-      httpResponse =
+      var getResponse =
           httpClient.send(
               HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/some-key"))
                   .GET()
                   .build(),
               HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-    }
 
-    assertThat(httpResponse.body()).isEqualTo("some thing");
-    assertThat(httpResponse.statusCode()).isEqualTo(200);
+      assertThat(getResponse.body()).isEqualTo("some thing");
+      assertThat(getResponse.statusCode()).isEqualTo(200);
+    }
   }
 
   @Test
   void get_unknown_resource() throws Exception {
-    HttpResponse<String> httpResponse;
     try (var httpStub = new HttpStub()) {
-      final var httpClient = HttpClient.newHttpClient();
+      var httpClient = HttpClient.newHttpClient();
 
-      httpResponse =
+      var getResponse =
           httpClient.send(
               HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/some-key"))
                   .GET()
                   .build(),
               HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-    }
 
-    assertThat(httpResponse.body()).isEqualTo("No resource for path /things/some-key");
-    assertThat(httpResponse.statusCode()).isEqualTo(404);
+      assertThat(getResponse.body()).isEqualTo("No resource for path /things/some-key");
+      assertThat(getResponse.statusCode()).isEqualTo(404);
+    }
+  }
+
+  @Test
+  void post() throws Exception {
+    try (var httpStub = new HttpStub()) {
+      var httpClient = HttpClient.newHttpClient();
+
+      var postResponse =
+          httpClient.send(
+              HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/"))
+                  .POST(HttpRequest.BodyPublishers.ofString("some thing new"))
+                  .build(),
+              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+      assertThat(postResponse.statusCode()).isEqualTo(201);
+
+      var location = postResponse.headers().firstValue("Location").orElseThrow();
+
+      var getResponse =
+          httpClient.send(
+              HttpRequest.newBuilder(URI.create(location)).GET().build(),
+              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+      assertThat(getResponse.body()).isEqualTo("some thing new");
+      assertThat(getResponse.statusCode()).isEqualTo(200);
+    }
   }
 }

@@ -1,2 +1,3 @@
 = HTTP
 
+- link:javadoc/http[JavaDoc API documentation]

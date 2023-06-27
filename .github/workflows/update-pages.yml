@@ -36,15 +36,14 @@ jobs:
       - name: Update AsciiDoc
         run: |
           ./gradlew asciidoc
-          rm -rf pages/docs/latest/manual
-          mv manual/build/docs/asciidoc pages/docs/latest/manual
+          mv manual/build/docs/asciidoc/* pages/
 
       - name: Update JavaDoc
         run: |
           ./gradlew javadoc
-          rm -rf pages/docs/latest/javadoc
-          mkdir pages/docs/latest/javadoc
-          mv modules/http/build/docs/javadoc pages/docs/latest/javadoc/http
+          rm -rf pages/javadoc
+          mkdir pages/javadoc
+          mv modules/http/build/docs/javadoc pages/javadoc/http
 
       - uses: actions/configure-pages@v3
 
