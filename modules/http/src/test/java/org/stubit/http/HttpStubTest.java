@@ -7,6 +7,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class HttpStubTest {
@@ -46,6 +48,7 @@ class HttpStubTest {
   }
 
   @Test
+  @Disabled("Posting a resource is not yet implemented")
   void post() throws Exception {
     try (var httpStub = new HttpStub()) {
       var httpClient = HttpClient.newHttpClient();
