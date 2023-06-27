@@ -1,6 +1,6 @@
 = Stubit
 Michael Kutz <mail@michael-kutz.de>
-:favicon: https://stubit.org/favicon.png
+:favicon: https://stubit.org/img/favicon.png
 :toc: left
 :icons: font
 :sectlinks:
