@@ -7,6 +7,14 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
+/**
+ * A {@link HttpStub} wraps an {@link HttpServer} that is started locally on a dynamic port to serve
+ * fixed stubbed responses ({@link Stubbing}s).
+ *
+ * <p>This can be used to simulate (stub) a remote service used in your production code. In order to
+ * do so, you need to configure your code to call the {@link HttpStub}'s {@link #address() address}
+ * instead of the actual service address.
+ */
 public class HttpStub implements AutoCloseable {
 
   private final HttpStubHandler handler;
@@ -26,16 +34,20 @@ public class HttpStub implements AutoCloseable {
     }
   }
 
-  public HttpStub stubResponse(HttpStubbing stubbedResponse) {
-    handler.stubbedResponses().add(stubbedResponse);
+  /**
+   * @param stubbings {@link Stubbing}(s) to be added
+   * @return this
+   */
+  public HttpStub add(Stubbing... stubbings) {
+    addAll(handler.stubbedResponses(), stubbings);
     return this;
   }
 
-  public HttpStub stubResponses(HttpStubbing... stubbedResponses) {
-    addAll(handler.stubbedResponses(), stubbedResponses);
-    return this;
-  }
-
+  /**
+   * Removes add {@link Stubbing}s.
+   *
+   * @return this
+   */
   public HttpStub reset() {
     handler.stubbedResponses().clear();
     return this;

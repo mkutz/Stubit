@@ -1,8 +1,8 @@
 package org.stubit.http;
 
 import static java.util.UUID.randomUUID;
-import static org.stubit.http.HttpStubbing.stub;
 import static org.stubit.http.StubbedResponse.response;
+import static org.stubit.http.Stubbing.stub;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -11,8 +11,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public record HttpStubHandler(String baseUri, List<HttpStubbing> stubbedResponses)
-    implements HttpHandler {
+record HttpStubHandler(String baseUri, List<Stubbing> stubbedResponses) implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
@@ -38,7 +37,7 @@ public record HttpStubHandler(String baseUri, List<HttpStubbing> stubbedResponse
     final var stubbing =
         stubbedResponses.stream().filter(stub -> stub.predicate().test(request)).findFirst();
     return stubbing
-        .map(HttpStubbing::response)
+        .map(Stubbing::response)
         .orElse(response().body("No stubbing for %s".formatted(request)).statusCode(404));
   }
 
@@ -46,7 +45,7 @@ public record HttpStubHandler(String baseUri, List<HttpStubbing> stubbedResponse
     final var stubbing =
         stubbedResponses.stream().filter(stub -> stub.predicate().test(request)).findFirst();
     return stubbing
-        .map(HttpStubbing::response)
+        .map(Stubbing::response)
         .orElseGet(
             () -> {
               final var uri = URI.create("%s%s%s".formatted(baseUri, request.uri(), randomUUID()));
@@ -54,7 +53,7 @@ public record HttpStubHandler(String baseUri, List<HttpStubbing> stubbedResponse
                   stub()
                       .path(uri.getPath())
                       .method("GET", "PATCH", "PUT")
-                      .response(response().body(request.body()).statusCode(200)));
+                      .returns(response().body(request.body()).statusCode(200)));
               return response()
                   .body("Added stubbing for %s".formatted(request.uri().getPath()))
                   .header("Location", uri.toString())

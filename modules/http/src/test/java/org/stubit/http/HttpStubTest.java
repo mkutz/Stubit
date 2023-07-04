@@ -3,23 +3,23 @@ package org.stubit.http;
 import static java.net.http.HttpClient.newHttpClient;
 import static java.net.http.HttpRequest.newBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.stubit.http.HttpStubbing.stub;
 import static org.stubit.http.StubbedResponse.response;
+import static org.stubit.http.Stubbing.stub;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
 class HttpStubTest {
 
   @Test
-  void get() throws Exception {
+  void add_stub() throws Exception {
     try (var httpStub = new HttpStub()) {
-      httpStub.stubResponse(
-          stub().path("/things/some-key").response(response().body("some thing").statusCode(200)));
+      httpStub.add(
+          stub().path("/things/some-key").returns(response().body("some thing").statusCode(200)));
 
       var response =
           newHttpClient()
@@ -35,7 +35,7 @@ class HttpStubTest {
   }
 
   @Test
-  void get_unknown_resource() throws Exception {
+  void unstubbed_get() throws Exception {
     try (var httpStub = new HttpStub()) {
       var response =
           newHttpClient()
@@ -43,13 +43,36 @@ class HttpStubTest {
                   newBuilder(URI.create(httpStub.address() + "/things/some-key")).GET().build(),
                   HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-      assertThat(response.body()).matches(Pattern.compile("No stubbing for GET /things/some-key"));
+      assertThat(response.body()).isEqualTo("No stubbing for GET /things/some-key");
       assertThat(response.statusCode()).isEqualTo(404);
     }
   }
 
   @Test
-  void post() throws Exception {
+  void add_post_stub() throws Exception {
+    try (var httpStub = new HttpStub()) {
+      var httpClient = newHttpClient();
+
+      httpStub.add(
+          stub()
+              .method("POST")
+              .path("/things/")
+              .returns(response().body("success").statusCode(201)));
+
+      var postResponse =
+          httpClient.send(
+              newBuilder(URI.create(httpStub.address() + "/things/"))
+                  .POST(HttpRequest.BodyPublishers.ofString("some thing new"))
+                  .build(),
+              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+      assertThat(postResponse.statusCode()).isEqualTo(201);
+      assertThat(postResponse.body()).isEqualTo("success");
+    }
+  }
+
+  @Test
+  void unstubbed_post() throws Exception {
     try (var httpStub = new HttpStub()) {
       var httpClient = newHttpClient();
 
@@ -71,6 +94,29 @@ class HttpStubTest {
 
       assertThat(getResponse.body()).isEqualTo("some thing new");
       assertThat(getResponse.statusCode()).isEqualTo(200);
+    }
+  }
+
+  @Test
+  void reset() throws IOException, InterruptedException {
+    try (var httpStub = new HttpStub()) {
+      httpStub
+          .add(
+              stub()
+                  .path("/things/some-key")
+                  .returns(response().body("some thing").statusCode(200)))
+          .reset();
+
+      var response =
+          newHttpClient()
+              .send(
+                  newBuilder(URI.create("%s/things/some-key".formatted(httpStub.address())))
+                      .GET()
+                      .build(),
+                  HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+      assertThat(response.body()).isEqualTo("No stubbing for GET /things/some-key");
+      assertThat(response.statusCode()).isEqualTo(404);
     }
   }
 }
