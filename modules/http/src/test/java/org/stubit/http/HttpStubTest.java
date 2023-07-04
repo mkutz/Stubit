@@ -1,61 +1,61 @@
 package org.stubit.http;
 
+import static java.net.http.HttpClient.newHttpClient;
+import static java.net.http.HttpRequest.newBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.stubit.http.HttpStubbing.stub;
+import static org.stubit.http.StubbedResponse.response;
 
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-
-import org.junit.jupiter.api.Disabled;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
 class HttpStubTest {
 
   @Test
-  void get_resource() throws Exception {
-    try (var httpStub = new HttpStub().add("/things/some-key", "some thing")) {
-      var httpClient = HttpClient.newHttpClient();
+  void get() throws Exception {
+    try (var httpStub = new HttpStub()) {
+      httpStub.stubResponse(
+          stub().path("/things/some-key").response(response().body("some thing").statusCode(200)));
 
-      var getResponse =
-          httpClient.send(
-              HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/some-key"))
-                  .GET()
-                  .build(),
-              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+      var response =
+          newHttpClient()
+              .send(
+                  newBuilder(URI.create("%s/things/some-key".formatted(httpStub.address())))
+                      .GET()
+                      .build(),
+                  HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-      assertThat(getResponse.body()).isEqualTo("some thing");
-      assertThat(getResponse.statusCode()).isEqualTo(200);
+      assertThat(response.body()).isEqualTo("some thing");
+      assertThat(response.statusCode()).isEqualTo(200);
     }
   }
 
   @Test
   void get_unknown_resource() throws Exception {
     try (var httpStub = new HttpStub()) {
-      var httpClient = HttpClient.newHttpClient();
+      var response =
+          newHttpClient()
+              .send(
+                  newBuilder(URI.create(httpStub.address() + "/things/some-key")).GET().build(),
+                  HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-      var getResponse =
-          httpClient.send(
-              HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/some-key"))
-                  .GET()
-                  .build(),
-              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-
-      assertThat(getResponse.body()).isEqualTo("No resource for path /things/some-key");
-      assertThat(getResponse.statusCode()).isEqualTo(404);
+      assertThat(response.body()).matches(Pattern.compile("No stubbing for GET /things/some-key"));
+      assertThat(response.statusCode()).isEqualTo(404);
     }
   }
 
   @Test
-  @Disabled("Posting a resource is not yet implemented")
   void post() throws Exception {
     try (var httpStub = new HttpStub()) {
-      var httpClient = HttpClient.newHttpClient();
+      var httpClient = newHttpClient();
 
       var postResponse =
           httpClient.send(
-              HttpRequest.newBuilder(URI.create(httpStub.address() + "/things/"))
+              newBuilder(URI.create(httpStub.address() + "/things/"))
                   .POST(HttpRequest.BodyPublishers.ofString("some thing new"))
                   .build(),
               HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
@@ -66,7 +66,7 @@ class HttpStubTest {
 
       var getResponse =
           httpClient.send(
-              HttpRequest.newBuilder(URI.create(location)).GET().build(),
+              newBuilder(URI.create(location)).GET().build(),
               HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
       assertThat(getResponse.body()).isEqualTo("some thing new");

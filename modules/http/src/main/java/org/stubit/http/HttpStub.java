@@ -1,71 +1,51 @@
 package org.stubit.http;
 
+import static java.util.Collections.*;
+
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class HttpStub implements AutoCloseable {
 
+  private final HttpStubHandler handler;
   private final HttpServer httpServer;
-  private final Map<String, String> resourceMap = new HashMap<>();
+  private final String address;
 
-  /** Creates and starts the HttpStub with an empty {@link #resourceMap}. */
+  /** Creates and starts the HttpStub. */
   public HttpStub() {
     try {
       httpServer = HttpServer.create(new InetSocketAddress(0), 0);
       httpServer.start();
-      httpServer.createContext(
-          "/",
-          httpExchange -> {
-            final var path = httpExchange.getRequestURI().getPath();
-            String responseBody;
-            if (!resourceMap.containsKey(path)) {
-              responseBody = String.format("No resource for path %s", path);
-              httpExchange.sendResponseHeaders(404, 0);
-            } else {
-              responseBody = resourceMap.get(path);
-              httpExchange.sendResponseHeaders(200, responseBody.length());
-            }
-            try (var responseBodyOutputStream = httpExchange.getResponseBody()) {
-              responseBodyOutputStream.write(responseBody.getBytes());
-            }
-            httpExchange.close();
-          });
+      address = "http://localhost:%d".formatted(httpServer.getAddress().getPort());
+      handler = new HttpStubHandler(address, new ArrayList<>());
+      httpServer.createContext("/", handler);
     } catch (IOException e) {
       throw new HttpStubCreationException(e);
     }
+  }
+
+  public HttpStub stubResponse(HttpStubbing stubbedResponse) {
+    handler.stubbedResponses().add(stubbedResponse);
+    return this;
+  }
+
+  public HttpStub stubResponses(HttpStubbing... stubbedResponses) {
+    addAll(handler.stubbedResponses(), stubbedResponses);
+    return this;
+  }
+
+  public HttpStub reset() {
+    handler.stubbedResponses().clear();
+    return this;
   }
 
   /**
    * @return the {@link HttpStub} base address
    */
   public String address() {
-    return String.format("http://localhost:%d", httpServer.getAddress().getPort());
-  }
-
-  /**
-   * Adds a new path and body to be returned.
-   *
-   * @param path the path the given body should be returned at
-   * @param body the body to be returned
-   * @return this
-   */
-  public HttpStub add(String path, String body) {
-    resourceMap.put(path, body);
-    return this;
-  }
-
-  /**
-   * Adds the given map to the {@link #resourceMap}
-   *
-   * @param map new entries for the {@link #resourceMap}
-   * @return this
-   */
-  public HttpStub add(Map<String, String> map) {
-    resourceMap.putAll(map);
-    return this;
+    return address;
   }
 
   @Override
