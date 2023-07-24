@@ -1,7 +1,7 @@
 plugins {
   base
   `stubit-style`
-  id("org.sonarqube") version "4.2.1.3168"
+  id("org.sonarqube") version "4.3.0.3225"
   id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
   id("info.solidsoft.pitest.aggregator")
 }
