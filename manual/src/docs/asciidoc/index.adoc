@@ -7,6 +7,7 @@ Michael Kutz <mail@michael-kutz.de>
 :sectanchors:
 :source-highlighter: coderay
 :hide-uri-scheme:
+:javadoc-url: http://stubit.org/javadoc
 
 include::chapters/00-introduction.adoc[leveloffset=1]
 include::chapters/01-getting-started.adoc[leveloffset=1]

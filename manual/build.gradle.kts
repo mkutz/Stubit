@@ -13,6 +13,8 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
   testImplementation("org.assertj:assertj-core:3.24.2")
+
+  testImplementation("com.squareup.okhttp3:okhttp:4.9.1")
 }
 
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }

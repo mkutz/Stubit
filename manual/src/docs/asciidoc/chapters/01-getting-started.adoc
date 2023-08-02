@@ -4,6 +4,7 @@
 
 In oder to use Stubit you need a JDK 17 or higher.
 
+
 == Dependencies
 
 To use Stubit in your own project, you need to add it as a dependency to your project.
@@ -26,7 +27,8 @@ implementation 'org.stubit:http:{revnumber}'
 
 NOTE: The `http` is an example module.
 
-=== Bill of Materials
+
+=== Bill of Materials (BOM)
 
 If you want to use more than one module in the same project, you can use Stubit's bill of materials (BOM) and omit the explicit version for the other modules.
 
