@@ -86,6 +86,7 @@ class HttpStubTest {
       assertThat(postResponse.statusCode()).isEqualTo(201);
 
       var location = postResponse.headers().firstValue("Location").orElseThrow();
+      assertThat(location).matches("http://localhost:\\d+/things/[0-9a-fA-F-]{36}");
 
       var getResponse =
           httpClient.send(

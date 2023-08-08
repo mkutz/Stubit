@@ -53,7 +53,7 @@ class HttpDocTest {
 
       assertThat(postResponse.code()).isEqualTo(201);
       assertThat(postResponse.body().string()).isEqualTo("Added stubbing for /nothing/here");
-      assertThat(postResponse.header("Location")).startsWith("http://localhost/nothing/here/");
+      assertThat(postResponse.header("Location")).startsWith("http://localhost");
       // end::post-unstubbed[]
 
       // tag::get-posted[]
