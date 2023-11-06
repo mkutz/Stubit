@@ -8,7 +8,7 @@ plugins {
 repositories { mavenCentral() }
 
 dependencies {
-  testImplementation(platform("org.junit:junit-bom:5.10.0"))
+  testImplementation(platform("org.junit:junit-bom:5.10.1"))
   testImplementation("org.junit.jupiter:junit-jupiter-api")
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
