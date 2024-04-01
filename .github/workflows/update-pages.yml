@@ -45,7 +45,7 @@ jobs:
           mkdir pages/javadoc
           mv modules/http/build/docs/javadoc pages/javadoc/http
 
-      - uses: actions/configure-pages@v3
+      - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v2
         with:
