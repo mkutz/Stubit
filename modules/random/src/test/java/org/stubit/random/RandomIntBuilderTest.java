@@ -3,6 +3,7 @@ package org.stubit.random;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.stubit.random.RandomIntBuilder.*;
 
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,22 @@ class RandomIntBuilderTest {
   void max_MIN_VALUE() {
     int max = MIN_VALUE;
     int result = anInt().max(max).build();
-    assertThat(result).isEqualTo(MIN_VALUE);
+    assertThat(result).isEqualTo(max);
+  }
+
+  @Test
+  void max_less_than_min() {
+    int min = 42;
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> anInt().min(min).max(min - 1))
+        .withMessage("Can't set max to 41, as it must not be less than min (42)");
+  }
+
+  @Test
+  void min_greater_than_min() {
+    int max = 42;
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> anInt().max(max).min(max + 1))
+        .withMessage("Can't set min to 43, as it must not be greater than max (42)");
   }
 }

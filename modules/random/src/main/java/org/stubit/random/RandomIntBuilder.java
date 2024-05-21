@@ -61,7 +61,7 @@ public class RandomIntBuilder {
   public RandomIntBuilder max(int maxInclusive) {
     if (maxInclusive < minInclusive) {
       throw new IllegalArgumentException(
-          "Can't set max to %d, as it must not less than min (%d)"
+          "Can't set max to %d, as it must not be less than min (%d)"
               .formatted(maxInclusive, minInclusive));
     }
     if (maxInclusive == Integer.MAX_VALUE) {
