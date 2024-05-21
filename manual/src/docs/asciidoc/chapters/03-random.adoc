@@ -1,0 +1,78 @@
+= Random
+
+The Random module contains a collection of builders and utility functions to generate random data.
+
+
+== Random Integer
+
+The link:{javadoc-url}/http/org/stubit/random/RandomIntBuilder.html[`RandomIntBuilder` class] allows to generate random Integer values within a defined min and max range (both inclusive).
+
+NOTE:: It is not possible to set max to Integer.MAX_VALUE.
+The maximum value is Integer.MAX_VALUE - 1.
+This is due to the fact that the SecureRandom.nextInt(int) method is exclusive of the upper bound.
+
+
+=== Min and Max
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
+----
+
+
+=== Positive Integer
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveInt]
+----
+
+
+=== Negative Integer
+
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeInt]
+----
+
+
+== Random Choice
+
+The link:{javadoc-url}/http/org/stubit/random/RandomChoiceBuilder.html[`RandomChoiceBuilder` class] allows to make a random choice from the objects in a Collection, an Array, or the values of an Enum type.
+
+
+=== From Collection
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_list]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_map]
+----
+
+
+=== From Array
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_ellipsis]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
+----
+
+
+=== From Enum Type
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_values]
+----
+
+
+=== Excluding Choices
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=save]
+----

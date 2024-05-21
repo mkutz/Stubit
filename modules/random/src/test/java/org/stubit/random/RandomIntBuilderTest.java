@@ -50,7 +50,7 @@ class RandomIntBuilderTest {
 
   @Test
   void max_MIN_VALUE() {
-    int max = MIN_VALUE + 1;
+    int max = MIN_VALUE;
     int result = anInt().max(max).build();
     assertThat(result).isEqualTo(MIN_VALUE);
   }

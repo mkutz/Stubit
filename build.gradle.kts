@@ -1,9 +1,8 @@
 plugins {
   base
-  `stubit-style`
   id("org.sonarqube") version "5.0.0.4638"
   id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
-  id("info.solidsoft.pitest.aggregator")
+  id("com.diffplug.spotless") version "6.24.0"
 }
 
 repositories { mavenCentral() }
@@ -23,4 +22,30 @@ nexusPublishing {
       snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
   }
+}
+
+spotless {
+  format("misc") {
+    target("**/*.md", "**/*.xml", "**/*.yml", "**/*.yaml", "**/*.html", "**/*.css", ".gitignore")
+    targetExclude("**/build/**/*", "**/.idea/**")
+    trimTrailingWhitespace()
+    endWithNewline()
+    indentWithSpaces(2)
+  }
+
+  java {
+    target("**/*.java")
+    targetExclude("**/build/**/*")
+    googleJavaFormat().reflowLongStrings()
+    removeUnusedImports()
+    indentWithSpaces(2)
+  }
+
+  kotlinGradle {
+    target("**/*.gradle.kts")
+    targetExclude("**/build/**/*.gradle.kts")
+    ktfmt().googleStyle()
+  }
+
+  freshmark { target("*.md") }
 }

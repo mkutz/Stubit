@@ -57,4 +57,15 @@ public class RandomChoice {
   public static <K, V> Entry<K, V> anyOf(Map<K, V> choices) {
     return anyOf(choices.entrySet());
   }
+
+  /**
+   * Randomly selects an element from the values of the provided choices {@link Enum} class.
+   *
+   * @param enumType the {@link Enum} type
+   * @return a randomly selected {@link Enum} constant from the provided choices enumType
+   * @param <T> the type of the choices
+   */
+  public static <T extends Enum<?>> T random(Class<? extends T> enumType) {
+    return anyOf(enumType.getEnumConstants());
+  }
 }

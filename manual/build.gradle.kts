@@ -1,11 +1,13 @@
 plugins {
   id("org.asciidoctor.jvm.convert") version "4.0.2"
-  `stubit-style`
   java
 }
 
+repositories { mavenCentral() }
+
 dependencies {
   testImplementation(project(":modules:http"))
+  testImplementation(project(":modules:random"))
 
   testImplementation(platform("org.junit:junit-bom:5.10.2"))
   testImplementation("org.junit.jupiter:junit-jupiter-api")

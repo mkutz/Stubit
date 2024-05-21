@@ -3,6 +3,7 @@ package org.stubit.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.stubit.random.RandomChoice.anyOf;
+import static org.stubit.random.RandomChoice.random;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ class RandomChoiceTest {
   @Test
   void anyOf_ellipsis() {
     String[] choices = {"a", "b", "c"};
-    assertThat(anyOf(choices)).isIn(choices);
+    assertThat(anyOf(choices)).isIn((Object[]) choices);
   }
 
   @Test
@@ -32,7 +33,7 @@ class RandomChoiceTest {
   @Test
   void anyOf_collection() {
     var choices = List.of("a", "b", "c");
-    assertThat(anyOf(choices)).isIn("a", "b", "c");
+    assertThat(anyOf(choices)).isIn(choices);
   }
 
   @Test
@@ -65,5 +66,16 @@ class RandomChoiceTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> anyOf(Map.of()))
         .withMessage("No choices provided");
+  }
+
+  @Test
+  void random_enum() {
+    enum ChoiceEnum {
+      A,
+      B,
+      C
+    }
+
+    assertThat(random(ChoiceEnum.class)).isIn((Object[]) ChoiceEnum.values());
   }
 }
