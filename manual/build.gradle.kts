@@ -1,5 +1,5 @@
 plugins {
-  id("org.asciidoctor.jvm.convert") version "4.0.2"
+  alias(libs.plugins.asciidoctor)
   java
 }
 
@@ -9,14 +9,14 @@ dependencies {
   testImplementation(project(":modules:http"))
   testImplementation(project(":modules:random"))
 
-  testImplementation(platform("org.junit:junit-bom:5.10.2"))
-  testImplementation("org.junit.jupiter:junit-jupiter-api")
-  testImplementation("org.junit.jupiter:junit-jupiter-params")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+  testImplementation(platform(libs.junitBom))
+  testImplementation(libs.junitJupiterApi)
+  testImplementation(libs.junitJupiterParams)
+  testImplementation(libs.assertjCore)
+  testImplementation(libs.okHttp)
 
-  testImplementation("org.assertj:assertj-core:3.25.3")
-
-  testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
+  testRuntimeOnly(libs.junitPlatformLauncher)
+  testRuntimeOnly(libs.junitJupiterEngine)
 }
 
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
