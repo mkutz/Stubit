@@ -1,0 +1,16 @@
+[versions]
+junitVersion = "5.10.2"
+assertjVersion = "3.25.3"
+
+[libraries]
+junitBom = { module = "org.junit:junit-bom", version.ref = "junitVersion" }
+junitJupiterApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitVersion" }
+junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitVersion" }
+junitJupiterParams = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitVersion" }
+junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher", version = "1.10.2" }
+assertjCore = { module = "org.assertj:assertj-core", version.ref = "assertjVersion" }
+
+[plugins]
+nexusPublish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
+sonar = { id = "org.sonarqube", version = "5.0.0.4638" }
+spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
