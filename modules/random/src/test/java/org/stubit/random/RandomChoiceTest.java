@@ -2,8 +2,7 @@ package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.stubit.random.RandomChoice.anyOf;
-import static org.stubit.random.RandomChoice.random;
+import static org.stubit.random.RandomChoice.chooseAnyFromValuesOf;
 
 import java.util.List;
 import java.util.Map;
@@ -12,70 +11,71 @@ import org.junit.jupiter.api.Test;
 class RandomChoiceTest {
 
   @Test
-  void anyOf_ellipsis() {
+  void chooseAnyFrom_ellipsis() {
     String[] choices = {"a", "b", "c"};
-    assertThat(anyOf(choices)).isIn((Object[]) choices);
+    assertThat(RandomChoice.chooseAnyFrom(choices)).isIn((Object[]) choices);
   }
 
   @Test
-  void anyOf_ellipsis_single() {
+  void chooseAnyFrom_ellipsis_single() {
     var single = "a";
-    assertThat(anyOf(single)).isEqualTo(single);
+    assertThat(RandomChoice.chooseAnyFrom(single)).isEqualTo(single);
   }
 
   @Test
-  void anyOf_ellipsis_empty() {
+  void chooseAnyFrom_ellipsis_empty() {
     assertThatIllegalArgumentException()
-        .isThrownBy(RandomChoice::anyOf)
+        .isThrownBy(RandomChoice::chooseAnyFrom)
         .withMessage("No choices provided");
   }
 
   @Test
-  void anyOf_collection() {
+  void chooseAnyFrom_collection() {
     var choices = List.of("a", "b", "c");
-    assertThat(anyOf(choices)).isIn(choices);
+    assertThat(RandomChoice.chooseAnyFrom(choices)).isIn(choices);
   }
 
   @Test
-  void anyOf_collection_single() {
+  void chooseAnyFrom_collection_single() {
     var single = "a";
-    assertThat(anyOf(List.of(single))).isEqualTo(single);
+    assertThat(RandomChoice.chooseAnyFrom(List.of(single))).isEqualTo(single);
   }
 
   @Test
-  void anyOf_collection_empty() {
+  void chooseAnyFrom_collection_empty() {
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> anyOf(List.of()))
+        .isThrownBy(() -> RandomChoice.chooseAnyFrom(List.of()))
         .withMessage("No choices provided");
   }
 
   @Test
-  void anyOf_map() {
+  void chooseAnyFrom_map() {
     var choices = Map.of("a", 1, "b", 2, "c", 3);
-    assertThat(anyOf(choices)).isIn(choices.entrySet());
+    assertThat(RandomChoice.chooseAnyFrom(choices)).isIn(choices.entrySet());
   }
 
   @Test
-  void anyOf_single() {
+  void chooseAnyFrom_single() {
     var single = Map.entry("a", 1);
-    assertThat(anyOf(Map.of(single.getKey(), single.getValue()))).isEqualTo(single);
+    assertThat(RandomChoice.chooseAnyFrom(Map.of(single.getKey(), single.getValue())))
+        .isEqualTo(single);
   }
 
   @Test
-  void anyOf_map_empty() {
+  void chooseAnyFrom_map_empty() {
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> anyOf(Map.of()))
+        .isThrownBy(() -> RandomChoice.chooseAnyFrom(Map.of()))
         .withMessage("No choices provided");
   }
 
   @Test
-  void random_enum() {
+  void chooseAnyFromValuesOf_enum() {
     enum ChoiceEnum {
       A,
       B,
       C
     }
 
-    assertThat(random(ChoiceEnum.class)).isIn((Object[]) ChoiceEnum.values());
+    assertThat(chooseAnyFromValuesOf(ChoiceEnum.class)).isIn((Object[]) ChoiceEnum.values());
   }
 }

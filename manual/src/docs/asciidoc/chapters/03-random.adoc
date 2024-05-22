@@ -39,7 +39,10 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeIn
 
 == Random Choice
 
-The link:{javadoc-url}/http/org/stubit/random/RandomChoiceBuilder.html[`RandomChoiceBuilder` class] allows to make a random choice from the objects in a Collection, an Array, or the values of an Enum type.
+The link:{javadoc-url}/http/org/stubit/random/RandomChoice.html[`RandomChoice` class] allows to make a random choice from the objects in a Collection, an Array, or the values of an Enum type.
+
+For simple selections there are several static `chooseAnyFrom` methods available.
+More complex selections can be defined with a Builder class that's returned by the `from` method.
 
 
 === From Collection

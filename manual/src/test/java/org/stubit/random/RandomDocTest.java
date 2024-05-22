@@ -1,8 +1,7 @@
 package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.stubit.random.RandomChoiceBuilder.from;
-import static org.stubit.random.RandomChoiceBuilder.fromValuesOf;
+import static org.stubit.random.RandomChoice.*;
 import static org.stubit.random.RandomIntBuilder.*;
 
 import java.util.List;
@@ -39,23 +38,27 @@ class RandomDocTest {
   }
 
   @Test
-  void anyOf_examples() {
+  void randomChoice_examples() {
     // tag::from_ellipsis[]
+    assertThat(chooseAnyFrom("a", "b", "c")).isIn("a", "b", "c");
     assertThat(from("a", "b", "c").chooseAny()).isIn("a", "b", "c");
     // end::from_ellipsis[]
 
     // tag::from_array[]
     String[] choiceArray = {"a", "b", "c"};
+    assertThat(chooseAnyFrom(choiceArray)).isIn((Object[]) choiceArray);
     assertThat(from(choiceArray).chooseAny()).isIn((Object[]) choiceArray);
     // end::from_array[]
 
     // tag::from_list[]
     var choicesList = List.of("a", "b", "c");
+    assertThat(chooseAnyFrom(choicesList)).isIn(choicesList);
     assertThat(from(choicesList).chooseAny()).isIn(choicesList);
     // end::from_list[]
 
     // tag::from_map[]
     var choicesMap = Map.of("a", 1, "b", 2, "c", 3);
+    assertThat(chooseAnyFrom(choicesMap)).isIn(choicesMap);
     assertThat(from(choicesMap).chooseAny()).isIn(choicesMap);
     // end::from_map[]
 
@@ -65,6 +68,7 @@ class RandomDocTest {
       GREEN,
       BLUE
     }
+    assertThat(chooseAnyFromValuesOf(Color.class)).isIn(Color.RED, Color.GREEN, Color.BLUE);
     assertThat(fromValuesOf(Color.class).chooseAny()).isIn(Color.RED, Color.GREEN, Color.BLUE);
     // end::from_enum_values[]
 

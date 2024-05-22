@@ -1,11 +1,9 @@
 package org.stubit.random;
 
 import java.security.SecureRandom;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
 
-/** Randomly selects an element from a collection of choices. */
+/** Randomly select an element from a collection of choices. */
 public class RandomChoice {
 
   private static final SecureRandom random = new SecureRandom();
@@ -20,7 +18,7 @@ public class RandomChoice {
    * @param <T> the type of the choices
    */
   @SafeVarargs
-  public static <T> T anyOf(T... choices) {
+  public static <T> T chooseAnyFrom(T... choices) {
     int size = choices.length;
     if (size == 0) {
       throw new IllegalArgumentException("No choices provided");
@@ -35,7 +33,7 @@ public class RandomChoice {
    * @return a randomly selected element from the provided choices
    * @param <T> the type of the choices
    */
-  public static <T> T anyOf(Collection<T> choices) {
+  public static <T> T chooseAnyFrom(Collection<T> choices) {
     int size = choices.size();
     if (size == 0) {
       throw new IllegalArgumentException("No choices provided");
@@ -47,15 +45,31 @@ public class RandomChoice {
   }
 
   /**
-   * Randomly selects an element from the provided choices {@link Map}.
-   *
-   * @param choices a {@link Map} of choices
-   * @return a randomly selected {@link Entry} from the provided choices
-   * @param <K> the type of the choices keys
-   * @param <V> the type of the choices values
+   * @param choices a {@link Collection} of choices
+   * @return a new {@link Builder} with the provided choices
+   * @param <T> the type of the choices
    */
-  public static <K, V> Entry<K, V> anyOf(Map<K, V> choices) {
-    return anyOf(choices.entrySet());
+  public static <T> Builder<T> from(Collection<T> choices) {
+    return new Builder<>(choices);
+  }
+
+  /**
+   * @param enumType the {@link Enum} type
+   * @return a new {@link Builder} with the provided enumType's values as choices
+   * @param <T> the type of the choices
+   */
+  public static <T extends Enum<?>> Builder<T> fromValuesOf(Class<? extends T> enumType) {
+    return from(Arrays.asList(enumType.getEnumConstants()));
+  }
+
+  /**
+   * @param choices an array of choices
+   * @return a new {@link Builder} with the provided choices
+   * @param <T> the type of the choices
+   */
+  @SafeVarargs
+  public static <T> Builder<T> from(T... choices) {
+    return from(Arrays.asList(choices));
   }
 
   /**
@@ -65,7 +79,58 @@ public class RandomChoice {
    * @return a randomly selected {@link Enum} constant from the provided choices enumType
    * @param <T> the type of the choices
    */
-  public static <T extends Enum<?>> T random(Class<? extends T> enumType) {
-    return anyOf(enumType.getEnumConstants());
+  public static <T extends Enum<?>> T chooseAnyFromValuesOf(Class<? extends T> enumType) {
+    return chooseAnyFrom(enumType.getEnumConstants());
+  }
+
+  /** Randomly selects an element from a collection of choices. */
+  public static class Builder<T> {
+
+    private static final SecureRandom random = new SecureRandom();
+
+    private final List<T> choices;
+
+    private Builder(Collection<T> choices) {
+      if (choices.isEmpty()) {
+        throw new IllegalArgumentException("No choices provided");
+      }
+      this.choices = new ArrayList<>(choices);
+    }
+
+    /**
+     * Excludes the provided choices from the selection
+     *
+     * @param excluded the excluded choices
+     * @return this
+     * @throws IllegalArgumentException if no choices remain
+     */
+    @SafeVarargs
+    public final Builder<T> save(T... excluded) {
+      return save(Arrays.asList(excluded));
+    }
+
+    /**
+     * Excludes the provided choices from the selection
+     *
+     * @param excluded the excluded choices
+     * @return this
+     * @throws IllegalArgumentException if no choices remain
+     */
+    public Builder<T> save(Collection<T> excluded) {
+      this.choices.removeAll(excluded);
+      if (choices.isEmpty()) {
+        throw new IllegalArgumentException("No choices left");
+      }
+      return this;
+    }
+
+    /**
+     * Returns and removes a randomly selected element from the {@link #choices}.
+     *
+     * @return a randomly selected element form the {@link #choices}
+     */
+    public T chooseAny() {
+      return choices.get(random.nextInt(choices.size()));
+    }
   }
 }

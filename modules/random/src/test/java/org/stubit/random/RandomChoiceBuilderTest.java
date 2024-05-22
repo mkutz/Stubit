@@ -2,8 +2,8 @@ package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.stubit.random.RandomChoiceBuilder.from;
-import static org.stubit.random.RandomChoiceBuilder.fromValuesOf;
+import static org.stubit.random.RandomChoice.from;
+import static org.stubit.random.RandomChoice.fromValuesOf;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +24,7 @@ class RandomChoiceBuilderTest {
   @Test
   void from_ellipsis_empty() {
     assertThatIllegalArgumentException()
-        .isThrownBy(RandomChoiceBuilder::from)
+        .isThrownBy(RandomChoice::from)
         .withMessage("No choices provided");
   }
 
