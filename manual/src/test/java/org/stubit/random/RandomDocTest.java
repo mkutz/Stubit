@@ -65,13 +65,13 @@ class RandomDocTest {
     // end::anyOf_array[]
 
     // tag::anyOf_list[]
-    var choicesList = List.of("a", "b", "c");
+    List<String> choicesList = List.of("a", "b", "c");
     String choiceFromList = anyOf(choicesList);
     assertThat(choiceFromList).isIn(choicesList);
     // end::anyOf_list[]
 
     // tag::anyOf_map[]
-    var choicesMap = Map.of("a", 1, "b", 2, "c", 3);
+    Map<String, Integer> choicesMap = Map.of("a", 1, "b", 2, "c", 3);
     Map<String, Integer> choiceFromMap = anyOf(choicesMap);
     assertThat(choiceFromMap).isIn(choicesMap);
     // end::anyOf_map[]
@@ -107,7 +107,7 @@ class RandomDocTest {
     // end::aChoiceFrom_list[]
 
     // tag::aChoiceFrom_map[]
-    var choicesMap = Map.of("a", 1, "b", 2, "c", 3);
+    Map<String, Integer> choicesMap = Map.of("a", 1, "b", 2, "c", 3);
     Map<String, Integer> choiceFromMap = aChoiceFrom(choicesMap).build();
     assertThat(choiceFromMap).isIn(choicesMap);
     // end::aChoiceFrom_map[]
