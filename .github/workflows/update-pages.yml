@@ -44,6 +44,7 @@ jobs:
           rm -rf pages/javadoc
           mkdir pages/javadoc
           mv modules/http/build/docs/javadoc pages/javadoc/http
+          mv modules/random/build/docs/javadoc pages/javadoc/random
 
       - uses: actions/configure-pages@v5
 

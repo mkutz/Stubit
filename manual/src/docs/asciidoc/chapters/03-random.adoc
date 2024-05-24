@@ -5,7 +5,7 @@ The Random module contains a collection of builders and utility functions to gen
 
 == Random Integer
 
-The link:{javadoc-url}/http/org/stubit/random/RandomInt.html[`RandomInt` class] allows to generate random Integer values within a defined min and max range (both inclusive).
+The link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomInt` class] allows to generate random Integer values within a defined min and max range (both inclusive).
 
 For simple integers there are several static methods available.
 More complex integers can be defined with a Builder class that's returned by the `andInt` method.
@@ -49,7 +49,7 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
 
 == Random Choice
 
-The link:{javadoc-url}/http/org/stubit/random/RandomChoice.html[`RandomChoice` class] allows to make a random choice from the objects in a Collection, an Array, or the values of an Enum type.
+The link:{javadoc-url}/random/org/stubit/random/RandomChoice.html[`RandomChoice` class] allows to make a random choice from the objects in a Collection, an Array, or the values of an Enum type.
 
 For simple selections there are several static `chooseAnyFrom` methods available.
 More complex selections can be defined with a Builder class that's returned by the `from` method.
