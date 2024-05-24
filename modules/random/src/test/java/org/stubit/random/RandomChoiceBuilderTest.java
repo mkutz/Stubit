@@ -2,8 +2,8 @@ package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.stubit.random.RandomChoice.from;
-import static org.stubit.random.RandomChoice.fromValuesOf;
+import static org.stubit.random.RandomChoice.aChoiceFrom;
+import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,121 +13,139 @@ class RandomChoiceBuilderTest {
 
   @Test
   void from_ellipsis() {
-    assertThat(from("a", "b", "c").chooseAny()).isIn("a", "b", "c");
+    assertThat(aChoiceFrom("a", "b", "c").build()).isIn("a", "b", "c");
   }
 
   @Test
-  void from_ellipsis_single() {
-    assertThat(from("a").chooseAny()).isEqualTo("a");
+  void aChoiceFrom_ellipsis_single() {
+    assertThat(aChoiceFrom("a").build()).isEqualTo("a");
   }
 
   @Test
-  void from_ellipsis_empty() {
+  void aChoiceFrom_ellipsis_empty() {
     assertThatIllegalArgumentException()
-        .isThrownBy(RandomChoice::from)
+        .isThrownBy(RandomChoice::aChoiceFrom)
         .withMessage("No choices provided");
   }
 
   @Test
-  void from_array() {
+  void aChoiceFrom_array() {
     String[] choicesArray = {"a", "b", "c"};
-    assertThat(from(choicesArray).chooseAny()).isIn((Object[]) choicesArray);
+    assertThat(aChoiceFrom(choicesArray).build()).isIn((Object[]) choicesArray);
   }
 
   @Test
-  void from_array_single() {
+  void aChoiceFrom_array_single() {
     String singleChoice = "a";
     String[] choicesArray = {singleChoice};
-    assertThat(from(choicesArray).chooseAny()).isEqualTo(singleChoice);
+    assertThat(aChoiceFrom(choicesArray).build()).isEqualTo(singleChoice);
   }
 
   @Test
-  void from_array_empty() {
+  void aChoiceFrom_array_empty() {
     String[] emptyChoicesArray = {};
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> from(emptyChoicesArray))
+        .isThrownBy(() -> aChoiceFrom(emptyChoicesArray))
         .withMessage("No choices provided");
   }
 
   @Test
-  void from_collection() {
+  void aChoiceFrom_collection() {
     Collection<String> choicesList = List.of("a", "b", "c");
-    assertThat(from(choicesList).chooseAny()).isIn(choicesList);
+    assertThat(RandomChoice.aChoiceFrom(choicesList).build()).isIn(choicesList);
   }
 
   @Test
-  void from_collection_single() {
+  void aChoiceFrom_collection_single() {
     String singleChoice = "a";
     Collection<String> choicesCollection = List.of(singleChoice);
-    assertThat(from(choicesCollection).chooseAny()).isEqualTo(singleChoice);
+    assertThat(RandomChoice.aChoiceFrom(choicesCollection).build()).isEqualTo(singleChoice);
   }
 
   @Test
-  void from_collection_Empty() {
+  void aChoiceFrom_collection_empty() {
     Collection<String> emptyChoicesCollection = List.of();
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> from(emptyChoicesCollection))
+        .isThrownBy(() -> RandomChoice.aChoiceFrom(emptyChoicesCollection))
         .withMessage("No choices provided");
   }
 
   @Test
-  void from_enum() {
+  void aChoiceFromValuesOf_enum() {
     enum ChoiceEnum {
       A,
       B,
       C
     }
-    assertThat(fromValuesOf(ChoiceEnum.class).chooseAny()).isIn((Object[]) ChoiceEnum.values());
+    assertThat(aChoiceFromValuesOf(ChoiceEnum.class).build()).isIn((Object[]) ChoiceEnum.values());
   }
 
   @Test
-  void from_enum_single() {
+  void aChoiceFromValuesOf_enum_single() {
     enum SingleChoiceEnum {
       SINGLE_CHOICE
     }
-    assertThat(fromValuesOf(SingleChoiceEnum.class).chooseAny())
+    assertThat(aChoiceFromValuesOf(SingleChoiceEnum.class).build())
         .isEqualTo(SingleChoiceEnum.SINGLE_CHOICE);
   }
 
   @Test
-  void from_enum_empty() {
+  void aChoiceFromValuesOf_enum_empty() {
     enum EmptyChoiceEnum {}
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> fromValuesOf(EmptyChoiceEnum.class))
+        .isThrownBy(() -> aChoiceFromValuesOf(EmptyChoiceEnum.class))
         .withMessage("No choices provided");
   }
 
   @Test
-  void save_one() {
+  void and_collection() {
+    Collection<String> initialChoices = List.of("a", "b");
+    Collection<String> additionalChoices = List.of("c", "d");
+    Collection<String> allChoices = List.of("a", "b", "c", "d");
+    assertThat(RandomChoice.aChoiceFrom(initialChoices).and(additionalChoices).build())
+        .isIn(allChoices);
+  }
+
+  @Test
+  void and_ellipsis() {
+    Collection<String> initialChoices = List.of("a", "b");
+    Collection<String> allChoices = List.of("a", "b", "c", "d");
+    assertThat(RandomChoice.aChoiceFrom(initialChoices).and("c", "d").build()).isIn(allChoices);
+  }
+
+  @Test
+  void butNot_one() {
     String excludedChoice = "a";
     Collection<String> remainingChoices = List.of("b", "c");
     Collection<String> allChoices = List.of(excludedChoice, "b", "c");
-    assertThat(from(allChoices).save(excludedChoice).chooseAny())
+    assertThat(RandomChoice.aChoiceFrom(allChoices).butNot(excludedChoice).build())
         .isNotEqualTo(excludedChoice)
         .isIn(remainingChoices);
   }
 
   @Test
-  void save_all_but_one() {
+  void butNot_all_but_one() {
     String remainingChoice = "c";
     Collection<String> excludedChoices = List.of("a", "b");
     Collection<String> allChoices = List.of("a", "b", remainingChoice);
-    assertThat(from(allChoices).save(excludedChoices).chooseAny()).isEqualTo(remainingChoice);
+    assertThat(RandomChoice.aChoiceFrom(allChoices).butNot(excludedChoices).build())
+        .isEqualTo(remainingChoice);
   }
 
   @Test
-  void save_all() {
+  void butNot_all() {
     Collection<String> allChoices = List.of("a", "b", "c");
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> from(allChoices).save(allChoices))
+        .isThrownBy(() -> RandomChoice.aChoiceFrom(allChoices).butNot(allChoices))
         .withMessage("No choices left");
   }
 
   @Test
-  void save_unknown() {
+  void butNot_unknown() {
     Collection<String> excludedChoices = List.of("c", "x");
     Collection<String> remainingChoices = List.of("a", "b");
     Collection<String> allChoices = List.of("a", "b", "c");
-    assertThat(from(allChoices).save(excludedChoices).chooseAny()).isIn(remainingChoices);
+    assertThat(RandomChoice.aChoiceFrom(allChoices).butNot(excludedChoices).build())
+        .isIn(remainingChoices);
   }
 }

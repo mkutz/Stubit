@@ -2,7 +2,6 @@ package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.stubit.random.RandomChoice.chooseAnyFromValuesOf;
 
 import java.util.List;
 import java.util.Map;
@@ -76,6 +75,7 @@ class RandomChoiceTest {
       C
     }
 
-    assertThat(chooseAnyFromValuesOf(ChoiceEnum.class)).isIn((Object[]) ChoiceEnum.values());
+    assertThat(RandomChoice.chooseAnyFromValuesOf(ChoiceEnum.class))
+        .isIn((Object[]) ChoiceEnum.values());
   }
 }

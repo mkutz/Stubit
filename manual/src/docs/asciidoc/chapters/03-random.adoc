@@ -5,18 +5,21 @@ The Random module contains a collection of builders and utility functions to gen
 
 == Random Integer
 
-The link:{javadoc-url}/http/org/stubit/random/RandomIntBuilder.html[`RandomIntBuilder` class] allows to generate random Integer values within a defined min and max range (both inclusive).
+The link:{javadoc-url}/http/org/stubit/random/RandomInt.html[`RandomInt` class] allows to generate random Integer values within a defined min and max range (both inclusive).
+
+For simple integers there are several static methods available.
+More complex integers can be defined with a Builder class that's returned by the `andInt` method.
 
 NOTE:: It is not possible to set max to Integer.MAX_VALUE.
 The maximum value is Integer.MAX_VALUE - 1.
 This is due to the fact that the SecureRandom.nextInt(int) method is exclusive of the upper bound.
 
 
-=== Min and Max
+=== Between Min and Max
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anIntBetween]
 ----
 
 
@@ -30,10 +33,17 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveIn
 
 === Negative Integer
 
-
 [source,java,indent=0]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeInt]
+----
+
+
+=== Builder
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
 ----
 
 
@@ -72,8 +82,22 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_values]
 ----
 
+=== Builder
 
-=== Excluding Choices
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_ellipsis]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_list]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_map]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_values]
+----
+
+
+==== Excluding Choices
 
 [source,java,indent=0]
 ----
