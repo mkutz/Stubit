@@ -56,7 +56,8 @@ class RandomChoiceTest {
   @Test
   void anyOf_single() {
     var single = Map.entry("a", 1);
-    assertThat(RandomChoice.anyOf(Map.of(single.getKey(), single.getValue()))).isEqualTo(single);
+    var choices = Map.ofEntries(single);
+    assertThat(RandomChoice.anyOf(choices)).isEqualTo(single);
   }
 
   @Test

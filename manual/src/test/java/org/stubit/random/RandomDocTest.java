@@ -72,8 +72,8 @@ class RandomDocTest {
 
     // tag::anyOf_map[]
     Map<String, Integer> choicesMap = Map.of("a", 1, "b", 2, "c", 3);
-    Map<String, Integer> choiceFromMap = anyOf(choicesMap);
-    assertThat(choiceFromMap).isIn(choicesMap);
+    Map.Entry<String, Integer> choiceFromMap = anyOf(choicesMap);
+    assertThat(choiceFromMap).isIn(choicesMap.entrySet());
     // end::anyOf_map[]
 
     // tag::any_enum[]
@@ -108,8 +108,8 @@ class RandomDocTest {
 
     // tag::aChoiceFrom_map[]
     Map<String, Integer> choicesMap = Map.of("a", 1, "b", 2, "c", 3);
-    Map<String, Integer> choiceFromMap = aChoiceFrom(choicesMap).build();
-    assertThat(choiceFromMap).isIn(choicesMap);
+    Map.Entry<String, Integer> choiceFromMap = aChoiceFrom(choicesMap).build();
+    assertThat(choiceFromMap).isIn(choicesMap.entrySet());
     // end::aChoiceFrom_map[]
 
     // tag::aChoiceFromValuesOf_enum[]

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /** Randomly select an element from a collection of choices. */
 public class RandomChoice {
@@ -19,6 +20,18 @@ public class RandomChoice {
    * @return a randomly selected element from the provided choices
    */
   public static <T> T anyOf(Collection<T> choices) {
+    return aChoiceFrom(choices).build();
+  }
+
+  /**
+   * Randomly selects an element from the provided choices {@link Collection}.
+   *
+   * @param choices a {@link Collection} of choices
+   * @param <K> the type of the choices' keys
+   * @param <V> the type of the choices' values
+   * @return a randomly selected element from the provided choices
+   */
+  public static <K, V> Map.Entry<K, V> anyOf(Map<K, V> choices) {
     return aChoiceFrom(choices).build();
   }
 
@@ -52,6 +65,16 @@ public class RandomChoice {
    */
   public static <T> Builder<T> aChoiceFrom(Collection<T> choices) {
     return new Builder<>(choices);
+  }
+
+  /**
+   * @param choices a {@link Collection} of choices
+   * @param <K> the type of the choices' keys
+   * @param <V> the type of the choices' values
+   * @return a new {@link Builder} with the provided choices
+   */
+  public static <K, V> Builder<Map.Entry<K, V>> aChoiceFrom(Map<K, V> choices) {
+    return new Builder<>(choices.entrySet());
   }
 
   /**
