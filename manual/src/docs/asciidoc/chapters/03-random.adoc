@@ -59,9 +59,9 @@ More complex selections can be defined with a Builder class that's returned by t
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_list]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_list]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_map]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_map]
 ----
 
 
@@ -69,9 +69,9 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_map]
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_ellipsis]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_ellipsis]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_array]
 ----
 
 
@@ -79,21 +79,29 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_values]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=any_enum]
 ----
 
 === Builder
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_ellipsis]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_ellipsis]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_array]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_array]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_list]
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_map]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_list]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_map]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_values]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFromValuesOf_enum]
+----
+
+
+==== Additional Choices
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=and]
 ----
 
 
@@ -101,5 +109,5 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=from_enum_v
 
 [source,java,indent=0]
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=save]
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=butNot]
 ----

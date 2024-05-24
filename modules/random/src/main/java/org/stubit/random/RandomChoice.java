@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /** Randomly select an element from a collection of choices. */
 public class RandomChoice {
@@ -19,20 +18,8 @@ public class RandomChoice {
    * @param <T> the type of the choices
    * @return a randomly selected element from the provided choices
    */
-  public static <T> T chooseAnyFrom(Collection<T> choices) {
+  public static <T> T anyOf(Collection<T> choices) {
     return aChoiceFrom(choices).build();
-  }
-
-  /**
-   * Randomly selects an element from the provided choices {@link Map}.
-   *
-   * @param choices a {@link Map} of choices
-   * @param <K> the type of the choices keys
-   * @param <V> the type of the choices values
-   * @return a randomly selected element from the provided choices
-   */
-  public static <K, V> Map.Entry<K, V> chooseAnyFrom(Map<K, V> choices) {
-    return aChoiceFrom(choices.entrySet()).build();
   }
 
   /**
@@ -43,7 +30,7 @@ public class RandomChoice {
    * @return a randomly selected element from the provided choices
    */
   @SafeVarargs
-  public static <T> T chooseAnyFrom(T... choices) {
+  public static <T> T anyOf(T... choices) {
     return aChoiceFrom(choices).build();
   }
 
@@ -54,8 +41,8 @@ public class RandomChoice {
    * @param <T> the type of the choices
    * @return a randomly selected {@link Enum} constant from the provided choices enumType
    */
-  public static <T extends Enum<?>> T chooseAnyFromValuesOf(Class<? extends T> enumType) {
-    return chooseAnyFrom(enumType.getEnumConstants());
+  public static <T extends Enum<?>> T any(Class<? extends T> enumType) {
+    return anyOf(enumType.getEnumConstants());
   }
 
   /**

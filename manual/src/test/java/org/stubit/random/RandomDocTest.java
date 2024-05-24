@@ -3,8 +3,8 @@ package org.stubit.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.stubit.random.RandomChoice.aChoiceFrom;
 import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
-import static org.stubit.random.RandomChoice.chooseAnyFrom;
-import static org.stubit.random.RandomChoice.chooseAnyFromValuesOf;
+import static org.stubit.random.RandomChoice.any;
+import static org.stubit.random.RandomChoice.anyOf;
 import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
@@ -19,8 +19,8 @@ class RandomDocTest {
   @Test
   void randomInt_examples() {
     // tag::anIntBetween[]
-    int anotherIntBetween42And4711 = anIntBetween(42, 4711);
-    assertThat(anotherIntBetween42And4711).isBetween(42, 4711);
+    int someIntBetween42And4711 = anIntBetween(42, 4711);
+    assertThat(someIntBetween42And4711).isBetween(42, 4711);
     // end::anIntBetween[]
 
     // tag::aPositiveInt[]
@@ -53,69 +53,83 @@ class RandomDocTest {
 
   @Test
   void randomChoice_examples() {
-    // tag::chooseAnyFrom_ellipsis[]
-    assertThat(chooseAnyFrom("a", "b", "c")).isIn("a", "b", "c");
-    // end::chooseAnyFrom_ellipsis[]
+    // tag::anyOf_ellipsis[]
+    String choiceFromEllipsis = anyOf("a", "b", "c");
+    assertThat(choiceFromEllipsis).isIn("a", "b", "c");
+    // end::anyOf_ellipsis[]
 
-    // tag::chooseAnyFrom_array[]
+    // tag::anyOf_array[]
     String[] choiceArray = {"a", "b", "c"};
-    assertThat(chooseAnyFrom(choiceArray)).isIn((Object[]) choiceArray);
-    // end::chooseAnyFrom_array[]
+    String choiceFromArray = anyOf(choiceArray);
+    assertThat(choiceFromArray).isIn((Object[]) choiceArray);
+    // end::anyOf_array[]
 
-    // tag::chooseAnyFrom_list[]
+    // tag::anyOf_list[]
     var choicesList = List.of("a", "b", "c");
-    assertThat(chooseAnyFrom(choicesList)).isIn(choicesList);
-    // end::chooseAnyFrom_list[]
+    String choiceFromList = anyOf(choicesList);
+    assertThat(choiceFromList).isIn(choicesList);
+    // end::anyOf_list[]
 
-    // tag::chooseAnyFrom_map[]
+    // tag::anyOf_map[]
     var choicesMap = Map.of("a", 1, "b", 2, "c", 3);
-    assertThat(chooseAnyFrom(choicesMap)).isIn(choicesMap.entrySet());
-    // end::chooseAnyFrom_map[]
+    Map<String, Integer> choiceFromMap = anyOf(choicesMap);
+    assertThat(choiceFromMap).isIn(choicesMap);
+    // end::anyOf_map[]
 
-    // tag::chooseAnyFromValuesOf_enum[]
+    // tag::any_enum[]
     enum Color {
       RED,
       GREEN,
       BLUE
     }
-    assertThat(chooseAnyFromValuesOf(Color.class)).isIn(Color.RED, Color.GREEN, Color.BLUE);
-    // end::chooseAnyFromValuesOf_enum[]
+    Color choiceFromEnum = any(Color.class);
+    assertThat(choiceFromEnum).isIn(Color.RED, Color.GREEN, Color.BLUE);
+    // end::any_enum[]
   }
 
   @Test
   void randomChoiceBuilder_examples() {
-    // tag::from_ellipsis[]
-    assertThat(aChoiceFrom("a", "b", "c").build()).isIn("a", "b", "c");
-    // end::from_ellipsis[]
+    // tag::aChoiceFrom_ellipsis[]
+    String choiceFromEllipsis = aChoiceFrom("a", "b", "c").build();
+    assertThat(choiceFromEllipsis).isIn("a", "b", "c");
+    // end::aChoiceFrom_ellipsis[]
 
-    // tag::from_array[]
-    String[] choiceArray = {"a", "b", "c"};
-    assertThat(aChoiceFrom(choiceArray).build()).isIn((Object[]) choiceArray);
-    // end::from_array[]
+    // tag::aChoiceFrom_array[]
+    String[] choicesArray = {"a", "b", "c"};
+    String choiceFromArray = aChoiceFrom(choicesArray).build();
+    assertThat(choiceFromArray).isIn((Object[]) choicesArray);
+    // end::aChoiceFrom_array[]
 
-    // tag::from_list[]
+    // tag::aChoiceFrom_list[]
     var choicesList = List.of("a", "b", "c");
-    assertThat(aChoiceFrom(choicesList).build()).isIn(choicesList);
-    // end::from_list[]
+    String choiceFromList = aChoiceFrom(choicesList).build();
+    assertThat(choiceFromList).isIn(choicesList);
+    // end::aChoiceFrom_list[]
 
-    // tag::from_map[]
+    // tag::aChoiceFrom_map[]
     var choicesMap = Map.of("a", 1, "b", 2, "c", 3);
-    assertThat(aChoiceFrom(choicesMap).build()).isIn(choicesMap);
-    // end::from_map[]
+    Map<String, Integer> choiceFromMap = aChoiceFrom(choicesMap).build();
+    assertThat(choiceFromMap).isIn(choicesMap);
+    // end::aChoiceFrom_map[]
 
-    // tag::from_enum_values[]
+    // tag::aChoiceFromValuesOf_enum[]
     enum Color {
       RED,
       GREEN,
       BLUE
     }
-    assertThat(aChoiceFromValuesOf(Color.class).build()).isIn(Color.RED, Color.GREEN, Color.BLUE);
-    // end::from_enum_values[]
+    Color choiceFromEnum = aChoiceFromValuesOf(Color.class).build();
+    assertThat(choiceFromEnum).isIn(Color.RED, Color.GREEN, Color.BLUE);
+    // end::aChoiceFromValuesOf_enum[]
 
-    // tag::save[]
-    var allChoices = List.of("a", "b", "c");
-    var excludedChoice = "a";
-    assertThat(aChoiceFrom(allChoices).butNot(excludedChoice).build()).isNotEqualTo(excludedChoice);
-    // end::save[]
+    // tag::and[]
+    String choiceWithAdditions = aChoiceFrom(List.of("a", "b")).and("c", "d").build();
+    assertThat(choiceWithAdditions).isIn("a", "b", "c", "d");
+    // end::and[]
+
+    // tag::butNot[]
+    String choiceWithExclusions = aChoiceFrom(List.of("a", "b", "c")).butNot("a").build();
+    assertThat(choiceWithExclusions).isNotEqualTo("a");
+    // end::butNot[]
   }
 }
