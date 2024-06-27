@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
-class CrudRepositoryStubTest {
+class ListCrudRepositoryStubTest {
 
   @Test
   void save() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
 
     TestEntity entity = repository.save(TestEntity.randomEntity());
 
@@ -23,7 +23,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void saveAll() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
 
     var entities =
         repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
@@ -33,7 +33,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void findById() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entity = repository.save(TestEntity.randomEntity());
 
     assertThat(repository.findById(entity.getUuid())).isPresent().get().isEqualTo(entity);
@@ -41,7 +41,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void existsById() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entity = repository.save(TestEntity.randomEntity());
 
     assertThat(repository.existsById(entity.getUuid())).isTrue();
@@ -49,7 +49,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void findAll() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     Iterable<TestEntity> entities =
         repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
 
@@ -58,7 +58,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void findAllById() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entities = List.of(TestEntity.randomEntity(), TestEntity.randomEntity());
     repository.saveAll(entities);
 
@@ -67,7 +67,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void findAllById_not_found() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var knownEntity = repository.save(TestEntity.randomEntity());
     var unknownId = randomUUID();
     var ids = List.of(knownEntity.getUuid(), unknownId);
@@ -78,7 +78,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void count() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     List<TestEntity> entitiesList = List.of(TestEntity.randomEntity(), TestEntity.randomEntity());
     repository.saveAll(entitiesList);
 
@@ -87,7 +87,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void deleteById() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entity = repository.save(TestEntity.randomEntity());
     assumeThat(repository.existsById(entity.getUuid())).isTrue();
 
@@ -98,7 +98,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void delete() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entity = repository.save(TestEntity.randomEntity());
     assumeThat(repository.existsById(entity.getUuid())).isTrue();
 
@@ -109,7 +109,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void deleteAllById() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entities =
         repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
 
@@ -120,7 +120,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void deleteAll_entities() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     var entities =
         repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
 
@@ -131,7 +131,7 @@ class CrudRepositoryStubTest {
 
   @Test
   void deleteAll() {
-    var repository = new TestCrudRepositoryStub();
+    var repository = new TestListCrudRepositoryStub();
     repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
 
     repository.deleteAll();
@@ -139,7 +139,7 @@ class CrudRepositoryStubTest {
     assertThat(repository.count()).isZero();
   }
 
-  private static class TestCrudRepositoryStub extends CrudRepositoryStub<TestEntity, UUID> {
+  private static class TestListCrudRepositoryStub extends ListCrudRepositoryStub<TestEntity, UUID> {
 
     @Override
     UUID getId(TestEntity entity) {
