@@ -5,6 +5,12 @@ import java.util.stream.StreamSupport;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.lang.NonNull;
 
+/**
+ * A stub implementation of {@link ListCrudRepositoryStub} that stores data in memory.
+ *
+ * @see CrudRepositoryStub
+ * @see ListCrudRepository
+ */
 public abstract class ListCrudRepositoryStub<T, ID> extends CrudRepositoryStub<T, ID>
     implements ListCrudRepository<T, ID> {
 

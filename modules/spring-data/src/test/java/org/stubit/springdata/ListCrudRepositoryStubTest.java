@@ -139,13 +139,8 @@ class ListCrudRepositoryStubTest {
     assertThat(repository.count()).isZero();
   }
 
-  private static class TestListCrudRepositoryStub extends ListCrudRepositoryStub<TestEntity, UUID> {
-
-    @Override
-    UUID getId(TestEntity entity) {
-      return entity.getUuid();
-    }
-  }
+  private static class TestListCrudRepositoryStub
+      extends ListCrudRepositoryStub<TestEntity, UUID> {}
 
   private static List<UUID> idsOf(Iterable<TestEntity> entities) {
     return stream(entities.spliterator(), false).map(TestEntity::getUuid).toList();

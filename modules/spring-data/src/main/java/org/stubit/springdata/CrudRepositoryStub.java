@@ -6,6 +6,12 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 
+/**
+ * A stub implementation of {@link CrudRepository} that stores data in memory.
+ *
+ * @see RepositoryStub
+ * @see CrudRepository
+ */
 public abstract class CrudRepositoryStub<T, ID> extends RepositoryStub<T, ID>
     implements CrudRepository<T, ID> {
 
