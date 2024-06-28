@@ -6,7 +6,8 @@ plugins {
 repositories { mavenCentral() }
 
 dependencies {
-  api(libs.springData)
+  implementation(libs.springData)
+  implementation(libs.jakartaPersistenceApi)
 
   testImplementation(platform(libs.junitBom))
   testImplementation(libs.junitJupiterApi)

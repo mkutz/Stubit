@@ -2,7 +2,6 @@ package org.stubit.springdata;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -10,16 +9,17 @@ import org.springframework.data.repository.Repository;
  *
  * @see Repository
  */
-abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
+public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
 
   /** A {@link HashMap} to store the data. */
   protected HashMap<ID, T> data = new HashMap<>();
 
   /**
-   * Extracts the {@link Id} annotated field value from the entity.
+   * Extracts the {@link org.springframework.data.annotation.Id} or {@link jakarta.persistence.Id}
+   * annotated field value from the entity.
    *
    * @param entity the entity to extract the id from
-   * @return the value of the {@link Id} annotated field.
+   * @return the value of the {@code Id} annotated field.
    */
   protected ID getId(T entity) {
     if (entity == null) {
@@ -27,7 +27,8 @@ abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
     }
 
     for (Field field : entity.getClass().getDeclaredFields()) {
-      if (field.getAnnotation(Id.class) != null) {
+      if (field.getAnnotation(org.springframework.data.annotation.Id.class) != null
+          || field.getAnnotation(jakarta.persistence.Id.class) != null) {
         try {
           field.setAccessible(true);
           return (ID) field.get(entity);
