@@ -1,5 +1,5 @@
 [versions]
-junitVersion = "5.10.2"
+junitVersion = "5.10.3"
 assertjVersion = "3.26.0"
 
 [libraries]
