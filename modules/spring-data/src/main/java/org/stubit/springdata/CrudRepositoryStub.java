@@ -32,10 +32,6 @@ public abstract class CrudRepositoryStub<T, ID> extends RepositoryStub<T, ID>
     return Optional.ofNullable(data.get(id));
   }
 
-  public T findByIdOrNull(@NonNull ID id) {
-    return data.get(id);
-  }
-
   @Override
   public boolean existsById(@NonNull ID id) {
     return data.containsKey(id);
