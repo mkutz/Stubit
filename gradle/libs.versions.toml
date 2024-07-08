@@ -16,5 +16,5 @@ jakartaPersistenceApi = { module = "jakarta.persistence:jakarta.persistence-api"
 [plugins]
 asciidoctor = { id = "org.asciidoctor.jvm.convert", version = "4.0.2" }
 nexusPublish = { id = "io.github.gradle-nexus.publish-plugin", version = "2.0.0" }
-sonar = { id = "org.sonarqube", version = "5.0.0.4638" }
+sonar = { id = "org.sonarqube", version = "5.1.0.4882" }
 spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
