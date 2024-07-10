@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /** Randomly select an element from a collection of choices. */
 public class RandomChoice {
@@ -46,10 +44,6 @@ public class RandomChoice {
    */
   @SafeVarargs
   public static <T> T anyOf(T... choices) {
-    return aChoiceFrom(choices).build();
-  }
-
-  public static <T> T anyOf(Stream<T> choices) {
     return aChoiceFrom(choices).build();
   }
 
@@ -102,14 +96,6 @@ public class RandomChoice {
     return aChoiceFrom(Arrays.asList(enumType.getEnumConstants()));
   }
 
-  public static <T> Builder<T> aChoiceFrom(Stream<T> choices) {
-    return new Builder<>(choices.toList());
-  }
-
-  public static Builder<Integer> aChoiceFrom(IntStream choices) {
-    return new Builder<>(choices.boxed().toList());
-  }
-
   /** Randomly selects an element from a collection of choices. */
   public static class Builder<T> {
 
@@ -128,6 +114,7 @@ public class RandomChoice {
      * Add the provided additional choices to the selection
      *
      * @param additionalChoices the additional choices
+     * @return this
      */
     public Builder<T> and(Collection<T> additionalChoices) {
       this.choices.addAll(additionalChoices);
@@ -138,6 +125,7 @@ public class RandomChoice {
      * Add the provided additional choices to the selection
      *
      * @param additionalChoices the additional choices
+     * @return this
      */
     @SafeVarargs
     public final Builder<T> and(T... additionalChoices) {

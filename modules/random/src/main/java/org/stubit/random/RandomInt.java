@@ -2,6 +2,7 @@ package org.stubit.random;
 
 import java.security.SecureRandom;
 
+/** Generates random integers. */
 public class RandomInt {
 
   private RandomInt() {}

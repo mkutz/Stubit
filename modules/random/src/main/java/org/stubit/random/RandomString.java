@@ -57,6 +57,7 @@ public class RandomString {
   }
 
   /**
+   * @param number the number of letters to generate
    * @param alphabet the {@link Alphabet} to select a character from
    * @return a randomly selected character from the provided {@link Alphabet}.
    */
