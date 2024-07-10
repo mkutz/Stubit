@@ -15,5 +15,5 @@ for file in $stagedFiles; do
   fi
 done
 
-echo "… ✓"
+echo "✓ formatting successful"
 exit 0
