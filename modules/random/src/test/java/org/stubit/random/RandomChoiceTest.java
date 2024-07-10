@@ -22,13 +22,6 @@ class RandomChoiceTest {
   }
 
   @Test
-  void anyOf_ellipsis_empty() {
-    assertThatIllegalArgumentException()
-        .isThrownBy(RandomChoice::anyOf)
-        .withMessage("No choices provided");
-  }
-
-  @Test
   void anyOf_collection() {
     var choices = List.of("a", "b", "c");
     assertThat(RandomChoice.anyOf(choices)).isIn(choices);

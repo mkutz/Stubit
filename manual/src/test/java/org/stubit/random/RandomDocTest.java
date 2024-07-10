@@ -60,7 +60,7 @@ class RandomDocTest {
 
     // tag::anyOf_array[]
     String[] choiceArray = {"a", "b", "c"};
-    String choiceFromArray = anyOf(choiceArray);
+    String choiceFromArray = anyOf(choiceArray[0], choiceArray[1], choiceArray[2]);
     assertThat(choiceFromArray).isIn((Object[]) choiceArray);
     // end::anyOf_array[]
 

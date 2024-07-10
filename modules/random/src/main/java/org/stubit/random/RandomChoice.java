@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /** Randomly select an element from a collection of choices. */
 public class RandomChoice {
@@ -44,6 +46,10 @@ public class RandomChoice {
    */
   @SafeVarargs
   public static <T> T anyOf(T... choices) {
+    return aChoiceFrom(choices).build();
+  }
+
+  public static <T> T anyOf(Stream<T> choices) {
     return aChoiceFrom(choices).build();
   }
 
@@ -94,6 +100,14 @@ public class RandomChoice {
    */
   public static <T extends Enum<?>> Builder<T> aChoiceFromValuesOf(Class<? extends T> enumType) {
     return aChoiceFrom(Arrays.asList(enumType.getEnumConstants()));
+  }
+
+  public static <T> Builder<T> aChoiceFrom(Stream<T> choices) {
+    return new Builder<>(choices.toList());
+  }
+
+  public static Builder<Integer> aChoiceFrom(IntStream choices) {
+    return new Builder<>(choices.boxed().toList());
   }
 
   /** Randomly selects an element from a collection of choices. */
