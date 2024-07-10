@@ -1,6 +1,7 @@
 package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.stubit.random.RandomChar.aLatinLetter;
 import static org.stubit.random.RandomChar.anArabicDigit;
 import static org.stubit.random.RandomChoice.aChoiceFrom;
 import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
@@ -138,11 +139,13 @@ class RandomDocTest {
   @Test
   void randomStringStartingWith_examples() {
     // tag::aStringStartingWith[]
-    aStringStartingWith('a').build();
+    assertThat(
+            aStringStartingWith(anArabicDigit())
+                .followedBy(aLatinLetter())
+                .followedBy('a')
+                .followedBy("-test")
+                .build())
+        .matches("\\d\\wa-test");
     // end::aStringStartingWith[]
-
-    // tag::followedBy[]
-    aStringStartingWith("123").followedBy(anArabicDigit()).build();
-    // end::followedBy[]
   }
 }
