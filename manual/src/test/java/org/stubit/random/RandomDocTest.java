@@ -1,6 +1,7 @@
 package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.stubit.random.RandomChar.anArabicDigit;
 import static org.stubit.random.RandomChoice.aChoiceFrom;
 import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
 import static org.stubit.random.RandomChoice.any;
@@ -9,6 +10,7 @@ import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
+import static org.stubit.random.RandomString.aStringStartingWith;
 
 import java.util.List;
 import java.util.Map;
@@ -131,5 +133,16 @@ class RandomDocTest {
     String choiceWithExclusions = aChoiceFrom(List.of("a", "b", "c")).butNot("a").build();
     assertThat(choiceWithExclusions).isNotEqualTo("a");
     // end::butNot[]
+  }
+
+  @Test
+  void randomStringStartingWith_examples() {
+    // tag::aStringStartingWith[]
+    aStringStartingWith('a').build();
+    // end::aStringStartingWith[]
+
+    // tag::followedBy[]
+    aStringStartingWith("123").followedBy(anArabicDigit()).build();
+    // end::followedBy[]
   }
 }

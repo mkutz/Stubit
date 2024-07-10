@@ -3,17 +3,16 @@ package org.stubit.random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.stubit.random.RandomChar.aLatinLetter;
 import static org.stubit.random.RandomChar.anArabicDigit;
-import static org.stubit.random.RandomString.aString;
+import static org.stubit.random.RandomString.aStringStartingWith;
 
 import org.junit.jupiter.api.Test;
 
 class RandomStringTest {
 
   @Test
-  void test1() {
+  void followedBy_mixed() {
     var string =
-        aString()
-            .startingWith(aLatinLetter())
+        aStringStartingWith(aLatinLetter())
             .followedBy('-')
             .followedBy(anArabicDigit())
             .followedBy("üäößø")
