@@ -18,7 +18,7 @@ class TestEntity {
   }
 
   public static TestEntity randomEntity() {
-    return new TestEntity(randomUUID(), RandomString.aRandomString(8));
+    return new TestEntity(randomUUID(), RandomString.latinLetters(8));
   }
 
   public UUID getUuid() {

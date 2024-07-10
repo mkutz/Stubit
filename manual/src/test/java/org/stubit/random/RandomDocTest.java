@@ -1,8 +1,6 @@
 package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.stubit.random.RandomChar.aLatinLetter;
-import static org.stubit.random.RandomChar.anArabicDigit;
 import static org.stubit.random.RandomChoice.aChoiceFrom;
 import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
 import static org.stubit.random.RandomChoice.any;
@@ -11,7 +9,9 @@ import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
+import static org.stubit.random.RandomString.aLatinLetter;
 import static org.stubit.random.RandomString.aStringStartingWith;
+import static org.stubit.random.RandomString.anArabicDigit;
 
 import java.util.List;
 import java.util.Map;
@@ -142,7 +142,7 @@ class RandomDocTest {
     assertThat(
             aStringStartingWith(anArabicDigit())
                 .followedBy(aLatinLetter())
-                .followedBy('a')
+                .followedBy("a")
                 .followedBy("-test")
                 .build())
         .matches("\\d\\wa-test");
