@@ -24,7 +24,7 @@ include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=rep
 ----
 
 In oder to create a stub, we need to implement this interface.
-By extending from the `CrudRepositoryStub`, this only requires to implement the `findByName` method:
+By extending from the link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryStub.html[`CrudRepositoryStub`], this only requires to implement the `findByName` method:
 
 [source,java,indent=0]
 ----
@@ -72,7 +72,7 @@ include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=ver
 
 == Reusing a Stub
 
-Note that a `CrudRepositoryStub` is basically a glorified `HashMap`, so we can simply create a new instance for every test.
+Note that a link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryStub.html[`CrudRepositoryStub`] is basically a glorified `HashMap`, so we can simply create a new instance for every test.
 
 However, that might require to recreate the service as well.
 So, if we want to reuse the stub, we can simply use the `deleteAll` method to clear the stub:
