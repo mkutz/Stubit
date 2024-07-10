@@ -111,3 +111,13 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=and]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=butNot]
 ----
+
+
+== Random String
+
+The link:{javadoc-url}/random/org/stubit/random/RandomString.html[`RandomString`] and link:{javadoc-url}/random/org/stubit/random/RandomChar.html[`RandomChar`] classes allow to generate random Strings.
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aStringStartingWith]
+----
