@@ -35,6 +35,9 @@ public class Alphabet {
               'ا', 'ب', 'ج', 'د', 'ه', 'و', 'ز', 'ح', 'ط', 'ي', 'ك', 'ل', 'م', 'ن', 'س', 'ع', 'ف',
               'ص', 'ق', 'ر', 'ش', 'ت', 'ث', 'خ', 'ذ', 'ض', 'ظ', 'غ'));
 
+  /** The Persian alphabet. */
+  public static final Alphabet PERSIAN = new Alphabet(BASIC_ARABIC, List.of('پ', 'چ', 'ژ', 'گ'));
+
   private final List<Character> letters;
 
   /**

@@ -9,9 +9,12 @@ import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
-import static org.stubit.random.RandomString.aLatinLetter;
+import static org.stubit.random.RandomString.aLetterFrom;
 import static org.stubit.random.RandomString.aStringStartingWith;
-import static org.stubit.random.RandomString.anArabicDigit;
+import static org.stubit.random.RandomString.arabicDigits;
+import static org.stubit.random.RandomString.digitsFrom;
+import static org.stubit.random.RandomString.latinLetters;
+import static org.stubit.random.RandomString.lettersFrom;
 
 import java.util.List;
 import java.util.Map;
@@ -137,15 +140,26 @@ class RandomDocTest {
   }
 
   @Test
-  void randomStringStartingWith_examples() {
-    // tag::aStringStartingWith[]
-    assertThat(
-            aStringStartingWith(anArabicDigit())
-                .followedBy(aLatinLetter())
-                .followedBy("a")
-                .followedBy("-test")
-                .build())
-        .matches("\\d\\wa-test");
-    // end::aStringStartingWith[]
+  void randomString_examples() {
+    // tag::germanLicensePlate[]
+    String germanLicensePlate =
+        aStringStartingWith(lettersFrom(anIntBetween(1, 3), Alphabet.GERMAN).toUpperCase())
+            .followedBy("-")
+            .followedBy(latinLetters(2).toUpperCase())
+            .followedBy(arabicDigits(anIntBetween(1, 4)))
+            .build();
+
+    assertThat(germanLicensePlate).matches("[A-ZÄÖÜẞ]{1,3}-[A-Z]{2}\\d{1,4}");
+    // end::germanLicensePlate[]
+
+    // tag::iranianLicensePlate[]
+    String iranianLicensePlate =
+        aStringStartingWith(digitsFrom(2, DigitSystem.PERSIAN))
+            .followedBy(aLetterFrom(Alphabet.PERSIAN))
+            .followedBy(digitsFrom(3, DigitSystem.PERSIAN))
+            .build();
+
+    assertThat(iranianLicensePlate).matches("[۱-۹]{2}[\\u0600-\\u06FF][۱-۹]{3}");
+    // end::iranianLicensePlate[]
   }
 }
