@@ -1,6 +1,6 @@
 [versions]
 junitVersion = "5.10.3"
-assertjVersion = "3.26.0"
+assertjVersion = "3.26.3"
 
 [libraries]
 junitBom = { module = "org.junit:junit-bom", version.ref = "junitVersion" }
