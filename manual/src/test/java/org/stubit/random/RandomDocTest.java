@@ -155,7 +155,7 @@ class RandomDocTest {
     // tag::iranianLicensePlate[]
     String iranianLicensePlate =
         aStringStartingWith(digitsFrom(2, DigitSystem.PERSIAN))
-            .followedBy(aLetterFrom(Alphabet.PERSIAN))
+            .followedBy(aLetterFrom(Alphabet.BASIC_ARABIC))
             .followedBy(digitsFrom(3, DigitSystem.PERSIAN))
             .build();
 
