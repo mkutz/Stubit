@@ -159,7 +159,7 @@ class RandomDocTest {
             .followedBy(digitsFrom(3, DigitSystem.PERSIAN))
             .build();
 
-    assertThat(iranianLicensePlate).matches("[۱-۹]{2}[\\u0600-\\u06FF][۱-۹]{3}");
+    assertThat(iranianLicensePlate).matches("[۰-۹]{2}[\\u0600-\\u06FF][۰-۹]{3}");
     // end::iranianLicensePlate[]
   }
 }
