@@ -6,6 +6,8 @@ plugins {
 repositories { mavenCentral() }
 
 dependencies {
+  api(libs.jspecify)
+
   implementation(libs.springData)
   implementation(libs.jakartaPersistenceApi)
 

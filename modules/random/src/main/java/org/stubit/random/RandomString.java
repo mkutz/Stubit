@@ -4,8 +4,11 @@ import static org.stubit.random.RandomChoice.anyOf;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 
 /** Generates random strings. */
+@NullMarked
 public class RandomString {
 
   private RandomString() {}
@@ -44,7 +47,7 @@ public class RandomString {
    * @param number the number of digits to generate
    * @return a number of digits from {@link DigitSystem#ARABIC}.
    */
-  public static String arabicDigits(int number) {
+  public static @NonNull String arabicDigits(int number) {
     return digitsFrom(number, DigitSystem.ARABIC);
   }
 

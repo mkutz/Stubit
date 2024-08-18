@@ -1,6 +1,7 @@
 package org.stubit.http;
 
 import java.util.function.Predicate;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * A {@link Stubbing} defines that all requests that match the given {@link #predicate} should
@@ -11,6 +12,7 @@ import java.util.function.Predicate;
  * @param response the {@link StubbedResponse} that will be returned if the {@link #predicate} is
  *     true
  */
+@NullMarked
 public record Stubbing(Predicate<HttpRequest> predicate, StubbedResponse response) {
 
   /**

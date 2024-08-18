@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 record HttpStubHandler(String baseUri, List<Stubbing> stubbedResponses) implements HttpHandler {
 
   @Override

@@ -2,8 +2,8 @@ package org.stubit.springdata;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.lang.NonNull;
 
 /**
  * A stub implementation of {@link ListCrudRepositoryStub} that stores data in memory.
@@ -11,21 +11,22 @@ import org.springframework.lang.NonNull;
  * @see CrudRepositoryStub
  * @see ListCrudRepository
  */
+@NullMarked
 public abstract class ListCrudRepositoryStub<T, ID> extends CrudRepositoryStub<T, ID>
     implements ListCrudRepository<T, ID> {
 
   @Override
-  public <S extends T> @NonNull List<S> saveAll(@NonNull Iterable<S> entities) {
+  public <S extends T> List<S> saveAll(Iterable<S> entities) {
     return asList(super.saveAll(entities));
   }
 
   @Override
-  public @NonNull List<T> findAll() {
+  public List<T> findAll() {
     return data.values().stream().toList();
   }
 
   @Override
-  public @NonNull List<T> findAllById(@NonNull Iterable<ID> ids) {
+  public List<T> findAllById(Iterable<ID> ids) {
     return asList(super.findAllById(ids));
   }
 

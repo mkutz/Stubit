@@ -1,8 +1,10 @@
 package org.stubit.random;
 
 import java.security.SecureRandom;
+import org.jspecify.annotations.NullMarked;
 
 /** Generates random integers. */
+@NullMarked
 public class RandomInt {
 
   private RandomInt() {}

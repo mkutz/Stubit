@@ -4,6 +4,7 @@ import static java.lang.String.join;
 
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * A {@link MethodPredicate} specifies which request methods should be considered for a {@link
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
  *
  * @param pattern the regular expression defining the considered methods
  */
+@NullMarked
 record MethodPredicate(Pattern pattern) implements Predicate<HttpRequest> {
 
   /**

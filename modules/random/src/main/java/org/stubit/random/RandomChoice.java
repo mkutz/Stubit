@@ -6,8 +6,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import org.jspecify.annotations.NullMarked;
 
 /** Randomly select an element from a collection of choices. */
+@NullMarked
 public class RandomChoice {
 
   private RandomChoice() {}

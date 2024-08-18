@@ -3,8 +3,8 @@ package org.stubit.springdata;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.lang.NonNull;
 
 /**
  * A stub implementation of {@link CrudRepository} that stores data in memory.
@@ -12,38 +12,39 @@ import org.springframework.lang.NonNull;
  * @see RepositoryStub
  * @see CrudRepository
  */
+@NullMarked
 public abstract class CrudRepositoryStub<T, ID> extends RepositoryStub<T, ID>
     implements CrudRepository<T, ID> {
 
   @Override
-  public @NonNull <S extends T> S save(@NonNull S entity) {
+  public <S extends T> S save(S entity) {
     data.put(getId(entity), entity);
     return entity;
   }
 
   @Override
-  public @NonNull <S extends T> Iterable<S> saveAll(@NonNull Iterable<S> entities) {
+  public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
     entities.forEach(this::save);
     return entities;
   }
 
   @Override
-  public @NonNull Optional<T> findById(@NonNull ID id) {
+  public Optional<T> findById(ID id) {
     return Optional.ofNullable(data.get(id));
   }
 
   @Override
-  public boolean existsById(@NonNull ID id) {
+  public boolean existsById(ID id) {
     return data.containsKey(id);
   }
 
   @Override
-  public @NonNull Iterable<T> findAll() {
+  public Iterable<T> findAll() {
     return data.values();
   }
 
   @Override
-  public @NonNull Iterable<T> findAllById(@NonNull Iterable<ID> ids) {
+  public Iterable<T> findAllById(Iterable<ID> ids) {
     List<T> found = new ArrayList<>();
     ids.forEach(
         id -> {
@@ -61,22 +62,22 @@ public abstract class CrudRepositoryStub<T, ID> extends RepositoryStub<T, ID>
   }
 
   @Override
-  public void deleteById(@NonNull ID id) {
+  public void deleteById(ID id) {
     data.remove(id);
   }
 
   @Override
-  public void delete(@NonNull T entity) {
+  public void delete(T entity) {
     data.remove(getId(entity));
   }
 
   @Override
-  public void deleteAllById(@NonNull Iterable<? extends ID> ids) {
+  public void deleteAllById(Iterable<? extends ID> ids) {
     ids.forEach(data::remove);
   }
 
   @Override
-  public void deleteAll(@NonNull Iterable<? extends T> entities) {
+  public void deleteAll(Iterable<? extends T> entities) {
     entities.forEach(entity -> data.remove(getId(entity)));
   }
 

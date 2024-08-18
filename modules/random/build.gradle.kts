@@ -6,6 +6,8 @@ plugins {
 repositories { mavenCentral() }
 
 dependencies {
+  api(libs.jspecify)
+
   testImplementation(platform(libs.junitBom))
   testImplementation(libs.junitJupiterApi)
   testImplementation(libs.junitJupiterParams)
