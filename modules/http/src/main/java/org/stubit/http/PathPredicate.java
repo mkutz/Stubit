@@ -2,6 +2,7 @@ package org.stubit.http;
 
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * A {@link PathPredicate} specifies which request paths should be considered for a {@link
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
  *
  * @param pattern the regular expression defining the considered paths
  */
+@NullMarked
 record PathPredicate(Pattern pattern) implements Predicate<HttpRequest> {
 
   /**

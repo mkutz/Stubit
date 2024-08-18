@@ -1,11 +1,12 @@
 package org.stubit.http;
 
-import static java.util.Collections.*;
+import static java.util.Collections.addAll;
 
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * A {@link HttpStub} wraps an {@link HttpServer} that is started locally on a dynamic port to serve
@@ -15,6 +16,7 @@ import java.util.ArrayList;
  * do so, you need to configure your code to call the {@link HttpStub}'s {@link #address() address}
  * instead of the actual service address.
  */
+@NullMarked
 public class HttpStub implements AutoCloseable {
 
   private final HttpStubHandler handler;
@@ -44,7 +46,7 @@ public class HttpStub implements AutoCloseable {
   }
 
   /**
-   * Removes add {@link Stubbing}s.
+   * Removes all {@link Stubbing}s.
    *
    * @return this
    */

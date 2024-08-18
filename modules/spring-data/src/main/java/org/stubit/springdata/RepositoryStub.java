@@ -2,6 +2,7 @@ package org.stubit.springdata;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.data.repository.Repository;
  *
  * @see Repository
  */
+@NullMarked
 public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
 
   /** A {@link HashMap} to store the data. */
@@ -22,10 +24,6 @@ public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
    * @return the value of the {@code Id} annotated field.
    */
   protected ID getId(T entity) {
-    if (entity == null) {
-      throw new IllegalArgumentException("Entity cannot be null");
-    }
-
     for (Field field : entity.getClass().getDeclaredFields()) {
       if (field.getAnnotation(org.springframework.data.annotation.Id.class) != null
           || field.getAnnotation(jakarta.persistence.Id.class) != null) {

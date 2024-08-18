@@ -5,8 +5,10 @@ import static java.util.stream.IntStream.rangeClosed;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import org.jspecify.annotations.NullMarked;
 
 /** Represents an alphabet (a list of letters). */
+@NullMarked
 public class Alphabet {
 
   /** The basic Latin alphabet as used in English. */

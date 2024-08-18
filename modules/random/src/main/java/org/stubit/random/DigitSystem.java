@@ -1,8 +1,10 @@
 package org.stubit.random;
 
 import java.util.List;
+import org.jspecify.annotations.NullMarked;
 
 /** Represents a digit system (a list of digits). */
+@NullMarked
 public class DigitSystem {
 
   /** The (western) Arabic digit system. */
