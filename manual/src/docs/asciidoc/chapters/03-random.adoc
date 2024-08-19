@@ -5,7 +5,7 @@ The Random module contains a collection of builders and utility functions to gen
 
 == Random Integer/Long
 
-The link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomInt`] and link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomLong`] classes allow to generate random Integer/Long values within a defined min and max range (both inclusive).
+The link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomInt`] and link:{javadoc-url}/random/org/stubit/random/RandomLong.html[`RandomLong`] classes allow to generate random Integer/Long values within a defined min and max range (both inclusive).
 
 For simple integers/longs there are several static methods available.
 More complex integers/long can be defined with Builder classes that's returned by the `anInt`/`aLong` methods.
