@@ -5,10 +5,16 @@ import static org.stubit.random.RandomChoice.aChoiceFrom;
 import static org.stubit.random.RandomChoice.aChoiceFromValuesOf;
 import static org.stubit.random.RandomChoice.any;
 import static org.stubit.random.RandomChoice.anyOf;
+import static org.stubit.random.RandomDuration.aDuration;
+import static org.stubit.random.RandomDuration.aDurationBetween;
 import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
+import static org.stubit.random.RandomLong.aLong;
+import static org.stubit.random.RandomLong.aLongBetween;
+import static org.stubit.random.RandomLong.aNegativeLong;
+import static org.stubit.random.RandomLong.aPositiveLong;
 import static org.stubit.random.RandomString.aLetterFrom;
 import static org.stubit.random.RandomString.aStringStartingWith;
 import static org.stubit.random.RandomString.arabicDigits;
@@ -16,6 +22,7 @@ import static org.stubit.random.RandomString.digitsFrom;
 import static org.stubit.random.RandomString.latinLetters;
 import static org.stubit.random.RandomString.lettersFrom;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -55,6 +62,41 @@ class RandomDocTest {
     int someIntGreaterThanMinus10 = anInt().min(-42).build();
     assertThat(someIntGreaterThanMinus10).isGreaterThanOrEqualTo(-42);
     // end::anInt[]
+  }
+
+  @Test
+  void randomLong_examples() {
+    // tag::aLongBetween[]
+    long someLongBetween42And4711 = aLongBetween(42, 4711);
+    assertThat(someLongBetween42And4711).isBetween(42L, 4711L);
+    // end::aLongBetween[]
+
+    // tag::aPositiveLong[]
+    long somePositiveLong = aPositiveLong();
+    assertThat(somePositiveLong).isPositive().isNotZero().isLessThan(Long.MAX_VALUE);
+    // end::aPositiveLong[]
+
+    // tag::aNegativeLong[]
+    long someNegativeLong = aNegativeLong();
+    assertThat(someNegativeLong).isNegative().isNotZero().isGreaterThanOrEqualTo(Long.MIN_VALUE);
+    // end::aNegativeLong[]
+  }
+
+  @Test
+  void randomLongBuilder_examples() {
+    // tag::aLong[]
+    long someLong = aLong().build();
+    assertThat(someLong).isBetween(Long.MIN_VALUE, Long.MAX_VALUE - 1);
+
+    long someLongBetween42And4711 = aLong().min(42L).max(4711L).build();
+    assertThat(someLongBetween42And4711).isBetween(42L, 4711L);
+
+    long someLongLessThan4711 = aLong().max(4711L).build();
+    assertThat(someLongLessThan4711).isLessThanOrEqualTo(4711L);
+
+    long someLongGreaterThanMinus10 = aLong().min(-42L).build();
+    assertThat(someLongGreaterThanMinus10).isGreaterThanOrEqualTo(-42L);
+    // end::aLong[]
   }
 
   @Test
@@ -161,5 +203,31 @@ class RandomDocTest {
 
     assertThat(iranianLicensePlate).matches("[۰-۹]{2}[\\u0600-\\u06FF][۰-۹]{3}");
     // end::iranianLicensePlate[]
+  }
+
+  @Test
+  void randomDuration_examples() {
+    // tag::aDurationBetween[]
+    Duration someDuration = aDurationBetween(Duration.ZERO, Duration.ofDays(7));
+    assertThat(someDuration).isBetween(Duration.ZERO, Duration.ofDays(7));
+    // end::aDurationBetween[]
+  }
+
+  @Test
+  void randomDurationBuilder_examples() {
+    // tag::aDuration[]
+    Duration someDuration = aDuration().build();
+    assertThat(someDuration).isBetween(Duration.ZERO, Duration.ofSeconds(Long.MAX_VALUE - 1));
+
+    Duration someDurationBetween1And2Hours =
+        aDuration().min(Duration.ofHours(1)).max(Duration.ofHours(2)).build();
+    assertThat(someDurationBetween1And2Hours).isBetween(Duration.ofHours(1), Duration.ofHours(2));
+
+    Duration someDurationLessThan2Hours = aDuration().max(Duration.ofHours(2)).build();
+    assertThat(someDurationLessThan2Hours).isLessThanOrEqualTo(Duration.ofHours(2));
+
+    Duration someDurationGreaterThan1Hour = aDuration().min(Duration.ofHours(1)).build();
+    assertThat(someDurationGreaterThan1Hour).isGreaterThanOrEqualTo(Duration.ofHours(1));
+    // end::aDuration[]
   }
 }
