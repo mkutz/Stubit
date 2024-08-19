@@ -3,16 +3,16 @@
 The Random module contains a collection of builders and utility functions to generate random data.
 
 
-== Random Integer
+== Random Integer/Long
 
-The link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomInt` class] allows to generate random Integer values within a defined min and max range (both inclusive).
+The link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomInt`] and link:{javadoc-url}/random/org/stubit/random/RandomInt.html[`RandomLong`] classes allow to generate random Integer/Long values within a defined min and max range (both inclusive).
 
-For simple integers there are several static methods available.
-More complex integers can be defined with a Builder class that's returned by the `andInt` method.
+For simple integers/longs there are several static methods available.
+More complex integers/long can be defined with Builder classes that's returned by the `anInt`/`aLong` methods.
 
-NOTE:: It is not possible to set max to Integer.MAX_VALUE.
-The maximum value is Integer.MAX_VALUE - 1.
-This is due to the fact that the SecureRandom.nextInt(int) method is exclusive of the upper bound.
+NOTE:: It is not possible to set max to `Integer.MAX_VALUE` or `Long.MAX_VALUE`.
+The maximum values are `Integer.MAX_VALUE - 1` and `Long.MAX_VALUE - 1`.
+This is due to the fact that the `SecureRandom.nextInt(int)` and `SecureRandom.nextLong(long)` methods are exclusive of the upper bound.
 
 
 === Between Min and Max
@@ -20,22 +20,34 @@ This is due to the fact that the SecureRandom.nextInt(int) method is exclusive o
 [source,java,indent=0]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anIntBetween]
+
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLongBetween]
 ----
 
 
-=== Positive Integer
+=== Positive Integer/Long
 
 [source,java,indent=0]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveInt]
 ----
 
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveLong]
+----
 
-=== Negative Integer
+
+=== Negative Integer/Long
 
 [source,java,indent=0]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeInt]
+----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeLong]
 ----
 
 
@@ -44,6 +56,11 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeIn
 [source,java,indent=0]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
+----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLong]
 ----
 
 
@@ -127,4 +144,19 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=germanLicen
 .Random Iranian licence plate
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=iranianLicensePlate]
+----
+
+
+== Random Duration
+
+The link:{javadoc-url}/random/org/stubit/random/RandomDuration.html[`RandomDuration` class] allows to generate random Durations.
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aDurationBetween]
+----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aDuration]
 ----
