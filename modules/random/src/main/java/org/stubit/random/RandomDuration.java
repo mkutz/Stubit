@@ -16,8 +16,7 @@ public class RandomDuration {
    * @return a random {@link Duration} between {@code minInclusive} and {@code maxInclusive}
    */
   public static Duration aDurationBetween(Duration minInclusive, Duration maxInclusive) {
-    return Duration.ofSeconds(
-        RandomLong.aLongBetween(minInclusive.toSeconds(), maxInclusive.toSeconds()));
+    return aDuration().min(minInclusive).max(maxInclusive).build();
   }
 
   /**
@@ -76,7 +75,7 @@ public class RandomDuration {
      */
     public Duration build() {
       return Duration.ofSeconds(
-          secureRandom.nextLong(minInclusive.toSeconds(), maxInclusive.toSeconds()));
+          secureRandom.nextLong(minInclusive.toSeconds(), maxInclusive.toSeconds() + 1));
     }
   }
 }

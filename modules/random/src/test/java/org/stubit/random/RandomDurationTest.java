@@ -1,11 +1,12 @@
 package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
-public class RandomDurationTest {
+class RandomDurationTest {
 
   @Test
   void aDurationBetween() {
@@ -22,7 +23,10 @@ public class RandomDurationTest {
 
   @Test
   void aDurationBetween_min_greater_than_max() {
-    var min = Duration.ofMinutes(15);
-    assertThat(RandomDuration.aDurationBetween(min, min)).isEqualTo(min);
+    Duration max = Duration.ofMinutes(15);
+    Duration min = max.plusSeconds(1);
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> RandomDuration.aDurationBetween(min, max))
+        .withMessage("Can't set max to %s, as it must not be less than min (%s)", max, min);
   }
 }
