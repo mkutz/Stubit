@@ -20,10 +20,10 @@ public class RandomDuration {
   }
 
   /**
-   * @return a {@link Duration} between {@link Duration#ZERO} and {@link Long#MAX_VALUE} seconds
+   * @return a {@link Duration} between {@link Duration#ZERO} and {@link Long#MAX_VALUE} - 1 seconds
    */
   public static RandomDurationBuilder aDuration() {
-    return new RandomDurationBuilder(Duration.ZERO, Duration.ofSeconds(Long.MAX_VALUE));
+    return new RandomDurationBuilder(Duration.ZERO, Duration.ofSeconds(Long.MAX_VALUE - 1));
   }
 
   /** Builds a random {@link Duration} within a specified range. */
