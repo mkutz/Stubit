@@ -2,8 +2,10 @@ package org.stubit.random;
 
 import java.security.SecureRandom;
 import java.time.Duration;
+import org.jspecify.annotations.NullMarked;
 
 /** Generates random {@link Duration}s. */
+@NullMarked
 public class RandomDuration {
 
   private RandomDuration() {}
