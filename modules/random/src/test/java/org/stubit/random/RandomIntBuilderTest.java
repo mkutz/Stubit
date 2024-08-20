@@ -33,6 +33,14 @@ class RandomIntBuilderTest {
   }
 
   @Test
+  void min_greater_than_max() {
+    int max = 42;
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> RandomInt.anInt().max(max).min(max + 1))
+        .withMessage("Can't set min to 43, as it must not be greater than max (42)");
+  }
+
+  @Test
   void max_MIN_VALUE() {
     int max = MIN_VALUE;
     assertThat(RandomInt.anInt().max(max).build()).isEqualTo(max);
@@ -44,14 +52,6 @@ class RandomIntBuilderTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> RandomInt.anInt().min(min).max(min - 1))
         .withMessage("Can't set max to 41, as it must not be less than min (42)");
-  }
-
-  @Test
-  void min_greater_than_max() {
-    int max = 42;
-    assertThatIllegalArgumentException()
-        .isThrownBy(() -> RandomInt.anInt().max(max).min(max + 1))
-        .withMessage("Can't set min to 43, as it must not be greater than max (42)");
   }
 
   @Test
