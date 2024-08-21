@@ -11,6 +11,8 @@ import static org.stubit.random.RandomInt.aNegativeInt;
 import static org.stubit.random.RandomInt.aPositiveInt;
 import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
+import static org.stubit.random.RandomLocalDate.aLocalDate;
+import static org.stubit.random.RandomLocalDate.aLocalDateBetween;
 import static org.stubit.random.RandomLong.aLong;
 import static org.stubit.random.RandomLong.aLongBetween;
 import static org.stubit.random.RandomLong.aNegativeLong;
@@ -23,6 +25,8 @@ import static org.stubit.random.RandomString.latinLetters;
 import static org.stubit.random.RandomString.lettersFrom;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -229,5 +233,43 @@ class RandomDocTest {
     Duration someDurationGreaterThan1Hour = aDuration().min(Duration.ofHours(1)).build();
     assertThat(someDurationGreaterThan1Hour).isGreaterThanOrEqualTo(Duration.ofHours(1));
     // end::aDuration[]
+  }
+
+  @Test
+  void randomLocalDate_examples() {
+    // tag::aLocalDateBetween[]
+    LocalDate someLockdownDay =
+        aLocalDateBetween(LocalDate.of(2020, 3, 8), LocalDate.of(2020, 5, 4));
+    assertThat(someLockdownDay).isBetween(LocalDate.of(2020, 3, 8), LocalDate.of(2020, 5, 4));
+    // end::aLocalDateBetween[]
+  }
+
+  @Test
+  void randomLocalDateBuilder_examples() {
+    // tag::aLocalDate[]
+    LocalDate someLocalDate = aLocalDate().build();
+    assertThat(someLocalDate).isBetween(LocalDate.MIN, LocalDate.MAX);
+
+    LocalDate someFutureDay = aLocalDate().future().build();
+    assertThat(someFutureDay).isAfterOrEqualTo(LocalDate.now());
+
+    LocalDate somePastDay = aLocalDate().past().build();
+    assertThat(somePastDay).isBeforeOrEqualTo(LocalDate.now());
+
+    LocalDate somePastAfterChristDay = aLocalDate().past().after(LocalDate.of(1, 1, 1)).build();
+    assertThat(somePastAfterChristDay)
+        .isBeforeOrEqualTo(LocalDate.now())
+        .isAfterOrEqualTo(LocalDate.of(1, 1, 1));
+
+    LocalDate someFutureDayInTheNext5Years =
+        aLocalDate().future().before(Year.now().plusYears(5).atDay(1)).build();
+    assertThat(someFutureDayInTheNext5Years)
+        .isAfterOrEqualTo(LocalDate.now())
+        .isBeforeOrEqualTo(Year.now().plusYears(5).atDay(1));
+
+    LocalDate someLockdownDay =
+        aLocalDate().after(LocalDate.of(2020, 3, 8)).before(LocalDate.of(2020, 5, 4)).build();
+    assertThat(someLockdownDay).isBetween(LocalDate.of(2020, 3, 8), LocalDate.of(2020, 5, 4));
+    // end::aLocalDate[]
   }
 }

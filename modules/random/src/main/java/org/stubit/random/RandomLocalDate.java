@@ -16,7 +16,7 @@ public class RandomLocalDate {
    * @return a random {@link LocalDate} between {@code minInclusive} and {@code maxInclusive}
    */
   public static LocalDate aLocalDateBetween(LocalDate minInclusive, LocalDate maxInclusive) {
-    return aLocalDate().min(minInclusive).max(maxInclusive).build();
+    return aLocalDate().after(minInclusive).before(maxInclusive).build();
   }
 
   /**
@@ -44,73 +44,68 @@ public class RandomLocalDate {
   public static class LocalDateBuilder {
 
     private final SecureRandom secureRandom = new SecureRandom();
-    private LocalDate minInclusive;
-    private LocalDate maxInclusive;
+    private LocalDate after;
+    private LocalDate before;
 
     private LocalDateBuilder(LocalDate min, LocalDate max) {
-      this.minInclusive = min;
-      this.maxInclusive = max;
+      this.after = min;
+      this.before = max;
     }
 
     /**
-     * Sets {@link #minInclusive} to {@link LocalDate#MIN} and {@link #maxInclusive} to yesterday.
+     * Sets {@link #after} to {@link LocalDate#MIN} and {@link #before} to yesterday.
      *
      * @return this
      */
     public LocalDateBuilder past() {
-      return min(LocalDate.MIN).max(LocalDate.now().minusDays(1));
+      return after(LocalDate.MIN).before(LocalDate.now().minusDays(1));
     }
 
     /**
-     * Sets {@link #minInclusive} to tomorrow and {@link #maxInclusive} to {@link LocalDate#MAX}.
+     * Sets {@link #after} to tomorrow and {@link #before} to {@link LocalDate#MAX}.
      *
      * @return this
      */
     public LocalDateBuilder future() {
-      return min(LocalDate.now().plusDays(1)).max(LocalDate.MAX);
+      return after(LocalDate.now().plusDays(1)).before(LocalDate.MAX);
     }
 
     /**
-     * @param minInclusive the minimum value (inclusive)
+     * @param afterIncluding the minimum value (inclusive)
      * @return this
-     * @throws IllegalArgumentException if {@code minInclusive} is after {@link #maxInclusive}
+     * @throws IllegalArgumentException if {@code afterIncluding} is after {@link #before}
      */
-    public LocalDateBuilder min(LocalDate minInclusive) {
-      if (minInclusive.isAfter(maxInclusive)) {
+    public LocalDateBuilder after(LocalDate afterIncluding) {
+      if (afterIncluding.isAfter(before)) {
         throw new IllegalArgumentException(
-            "Can't set min to %s, as it must not be greater than max (%s)"
-                .formatted(minInclusive, maxInclusive));
+            "Can't set after to %s, as it must not be greater than before (%s)"
+                .formatted(afterIncluding, before));
       }
-      this.minInclusive = minInclusive;
+      this.after = afterIncluding;
       return this;
     }
 
     /**
-     * @param maxInclusive the maximum value (inclusive)
+     * @param beforeIncluding the maximum value (inclusive)
      * @return this
-     * @throws IllegalArgumentException if {@code maxInclusive} is before {@link #minInclusive}
+     * @throws IllegalArgumentException if {@code beforeIncluding} is before {@link #after}
      */
-    public LocalDateBuilder max(LocalDate maxInclusive) {
-      if (maxInclusive.isBefore(minInclusive)) {
+    public LocalDateBuilder before(LocalDate beforeIncluding) {
+      if (beforeIncluding.isBefore(after)) {
         throw new IllegalArgumentException(
-            "Can't set max to %s, as it must not be less than min (%s)"
-                .formatted(maxInclusive, minInclusive));
+            "Can't set before to %s, as it must not be less than after (%s)"
+                .formatted(beforeIncluding, after));
       }
-      this.maxInclusive = maxInclusive;
+      this.before = beforeIncluding;
       return this;
     }
 
-    // TODO in year
-    // TODO weekday (Monday, Tuesday, etc.)
-    // TODO weekend (Saturday or Sunday)
-    // TODO summer, winter, spring, fall
-
     /**
-     * @return a random long between {@link #minInclusive} and {@link #maxInclusive}
+     * @return a random long between {@link #after} and {@link #before}
      */
     public LocalDate build() {
-      long minEpochDay = minInclusive.toEpochDay();
-      long maxEpochDay = maxInclusive.toEpochDay() + 1;
+      long minEpochDay = after.toEpochDay();
+      long maxEpochDay = before.toEpochDay() + 1;
       long randomEpochDay = minEpochDay + secureRandom.nextLong(0, maxEpochDay - minEpochDay);
       return LocalDate.ofEpochDay(randomEpochDay);
     }

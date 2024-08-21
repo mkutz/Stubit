@@ -15,45 +15,45 @@ class RandomLocalDateBuilderTest {
   }
 
   @Test
-  void min() {
+  void after() {
     LocalDate min = LocalDate.of(2012, 12, 20);
-    assertThat(RandomLocalDate.aLocalDate().min(min).build()).isAfterOrEqualTo(min);
+    assertThat(RandomLocalDate.aLocalDate().after(min).build()).isAfterOrEqualTo(min);
   }
 
   @Test
-  void min_MAX_VALUE() {
+  void after_before_VALUE() {
     LocalDate min = LocalDate.MAX;
-    assertThat(RandomLocalDate.aLocalDate().min(min).build()).isEqualTo(min);
+    assertThat(RandomLocalDate.aLocalDate().after(min).build()).isEqualTo(min);
   }
 
   @Test
-  void min_greater_than_max() {
+  void after_greater_than_before() {
     LocalDate max = LocalDate.of(2012, 12, 20);
     LocalDate min = max.plusDays(1);
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> RandomLocalDate.aLocalDate().max(max).min(min))
-        .withMessage("Can't set min to %s, as it must not be greater than max (%s)", min, max);
+        .isThrownBy(() -> RandomLocalDate.aLocalDate().before(max).after(min))
+        .withMessage("Can't set after to %s, as it must not be greater than before (%s)", min, max);
   }
 
   @Test
-  void max() {
+  void before() {
     LocalDate max = LocalDate.of(2012, 12, 20);
-    assertThat(RandomLocalDate.aLocalDate().max(max).build()).isBeforeOrEqualTo(max);
+    assertThat(RandomLocalDate.aLocalDate().before(max).build()).isBeforeOrEqualTo(max);
   }
 
   @Test
-  void max_MIN_VALUE() {
+  void before_after_VALUE() {
     LocalDate max = LocalDate.MIN;
-    Assertions.assertThat(RandomLocalDate.aLocalDate().max(max).build()).isEqualTo(max);
+    Assertions.assertThat(RandomLocalDate.aLocalDate().before(max).build()).isEqualTo(max);
   }
 
   @Test
-  void max_less_than_min() {
+  void before_less_than_after() {
     LocalDate min = LocalDate.of(2012, 12, 20);
     LocalDate max = min.minusDays(1);
     assertThatIllegalArgumentException()
-        .isThrownBy(() -> RandomLocalDate.aLocalDate().min(min).max(max))
-        .withMessage("Can't set max to %s, as it must not be less than min (%s)", max, min);
+        .isThrownBy(() -> RandomLocalDate.aLocalDate().after(min).before(max))
+        .withMessage("Can't set before to %s, as it must not be less than after (%s)", max, min);
   }
 
   @Test
