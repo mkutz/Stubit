@@ -1,10 +1,14 @@
 package org.stubit.random;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.within;
 
+import java.time.DateTimeException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import org.assertj.core.api.Assertions;
+import java.time.Month;
+import java.time.Year;
 import org.junit.jupiter.api.Test;
 
 class RandomLocalDateBuilderTest {
@@ -15,54 +19,92 @@ class RandomLocalDateBuilderTest {
   }
 
   @Test
-  void after() {
-    LocalDate min = LocalDate.of(2012, 12, 20);
-    assertThat(RandomLocalDate.aLocalDate().after(min).build()).isAfterOrEqualTo(min);
+  void year_enum() {
+    int expectedYear = 2024;
+    LocalDate radomLocalDate = RandomLocalDate.aLocalDate().year(Year.of(expectedYear)).build();
+    assertThat(radomLocalDate.getYear()).isEqualTo(expectedYear);
   }
 
   @Test
-  void after_before_VALUE() {
-    LocalDate min = LocalDate.MAX;
-    assertThat(RandomLocalDate.aLocalDate().after(min).build()).isEqualTo(min);
+  void year_int() {
+    int expectedYear = 2024;
+    LocalDate radomLocalDate = RandomLocalDate.aLocalDate().year(expectedYear).build();
+    assertThat(radomLocalDate.getYear()).isEqualTo(expectedYear);
   }
 
   @Test
-  void after_greater_than_before() {
-    LocalDate max = LocalDate.of(2012, 12, 20);
-    LocalDate min = max.plusDays(1);
-    assertThatIllegalArgumentException()
-        .isThrownBy(() -> RandomLocalDate.aLocalDate().before(max).after(min))
-        .withMessage("Can't set after to %s, as it must not be greater than before (%s)", min, max);
+  void month_enum() {
+    Month expectedMonth = Month.APRIL;
+    LocalDate radomLocalDate = RandomLocalDate.aLocalDate().month(expectedMonth).build();
+    assertThat(radomLocalDate.getMonth()).isEqualTo(expectedMonth);
   }
 
   @Test
-  void before() {
-    LocalDate max = LocalDate.of(2012, 12, 20);
-    assertThat(RandomLocalDate.aLocalDate().before(max).build()).isBeforeOrEqualTo(max);
+  void month_int() {
+    Month expectedMonth = Month.NOVEMBER;
+    LocalDate radomLocalDate = RandomLocalDate.aLocalDate().month(expectedMonth.getValue()).build();
+    assertThat(radomLocalDate.getMonth()).isEqualTo(expectedMonth);
   }
 
   @Test
-  void before_after_VALUE() {
-    LocalDate max = LocalDate.MIN;
-    Assertions.assertThat(RandomLocalDate.aLocalDate().before(max).build()).isEqualTo(max);
+  void dayOfMonth() {
+    LocalDate radomLocalDate = RandomLocalDate.aLocalDate().dayOfMonth(11).build();
+    assertThat(radomLocalDate.getDayOfMonth()).isEqualTo(11);
   }
 
   @Test
-  void before_less_than_after() {
-    LocalDate min = LocalDate.of(2012, 12, 20);
-    LocalDate max = min.minusDays(1);
-    assertThatIllegalArgumentException()
-        .isThrownBy(() -> RandomLocalDate.aLocalDate().after(min).before(max))
-        .withMessage("Can't set before to %s, as it must not be less than after (%s)", max, min);
+  void dayOfMonth_negative() {
+    var localDateBuilder = RandomLocalDate.aLocalDate();
+    assertThatExceptionOfType(DateTimeException.class)
+        .isThrownBy(() -> localDateBuilder.dayOfMonth(-1))
+        .withMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): -1");
   }
 
   @Test
-  void future() {
-    assertThat(RandomLocalDate.aLocalDate().future().build()).isAfter(LocalDate.now());
+  void dayOfMonth_greater_maximum() {
+    var localDateBuilder = RandomLocalDate.aLocalDate();
+    assertThatExceptionOfType(DateTimeException.class)
+        .isThrownBy(() -> localDateBuilder.dayOfMonth(32))
+        .withMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): 32");
   }
 
   @Test
-  void past() {
-    assertThat(RandomLocalDate.aLocalDate().past().build()).isBefore(LocalDate.now());
+  void dayOfMonth_greater_maximum_month_set() {
+    var builderWithMonthSet = RandomLocalDate.aLocalDate().month(Month.FEBRUARY);
+    assertThatExceptionOfType(DateTimeException.class)
+        .isThrownBy(() -> builderWithMonthSet.dayOfMonth(30))
+        .withMessage("Invalid date 'FEBRUARY 30'");
+  }
+
+  @Test
+  void dayOfMonth_dayOfWeek_already_set() {
+    var builderWithDayOfWeekSet = RandomLocalDate.aLocalDate().dayOfWeek(DayOfWeek.MONDAY);
+
+    var localDate = builderWithDayOfWeekSet.dayOfMonth(11).build();
+
+    assertThat(localDate.getDayOfMonth()).isEqualTo(11);
+    assertThat(localDate.getDayOfWeek()).isInstanceOf(DayOfWeek.class);
+  }
+
+  @Test
+  void dayOfWeek_enum() {
+    assertThat(RandomLocalDate.aLocalDate().dayOfWeek(DayOfWeek.MONDAY).build().getDayOfWeek())
+        .isEqualTo(DayOfWeek.MONDAY);
+  }
+
+  @Test
+  void dayOfWeek_int() {
+    assertThat(RandomLocalDate.aLocalDate().dayOfWeek(3).build().getDayOfWeek())
+        .isEqualTo(DayOfWeek.WEDNESDAY);
+  }
+
+  @Test
+  void dayOfWeek_day_already_set() {
+    var builderWithDaySet = RandomLocalDate.aLocalDate().dayOfMonth(11);
+
+    var localDate = builderWithDaySet.dayOfWeek(DayOfWeek.MONDAY).build();
+
+    assertThat(localDate.getDayOfWeek()).isEqualTo(DayOfWeek.MONDAY);
+    assertThat(localDate.getDayOfMonth()).isCloseTo(11, within(7));
   }
 }

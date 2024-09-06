@@ -13,6 +13,7 @@ import static org.stubit.random.RandomInt.anInt;
 import static org.stubit.random.RandomInt.anIntBetween;
 import static org.stubit.random.RandomLocalDate.aLocalDate;
 import static org.stubit.random.RandomLocalDate.aLocalDateBetween;
+import static org.stubit.random.RandomLocalDate.aLocalDateInRange;
 import static org.stubit.random.RandomLong.aLong;
 import static org.stubit.random.RandomLong.aLongBetween;
 import static org.stubit.random.RandomLong.aNegativeLong;
@@ -24,8 +25,10 @@ import static org.stubit.random.RandomString.digitsFrom;
 import static org.stubit.random.RandomString.latinLetters;
 import static org.stubit.random.RandomString.lettersFrom;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.util.List;
 import java.util.Map;
@@ -245,31 +248,63 @@ class RandomDocTest {
   }
 
   @Test
-  void randomLocalDateBuilder_examples() {
-    // tag::aLocalDate[]
-    LocalDate someLocalDate = aLocalDate().build();
+  void randomLocalDateInRangeBuilder_examples() {
+    // tag::aLocalDateInRange[]
+    LocalDate someLocalDate = aLocalDateInRange().build();
     assertThat(someLocalDate).isBetween(LocalDate.MIN, LocalDate.MAX);
 
-    LocalDate someFutureDay = aLocalDate().future().build();
+    LocalDate someFutureDay = aLocalDateInRange().future().build();
     assertThat(someFutureDay).isAfterOrEqualTo(LocalDate.now());
 
-    LocalDate somePastDay = aLocalDate().past().build();
+    LocalDate somePastDay = aLocalDateInRange().past().build();
     assertThat(somePastDay).isBeforeOrEqualTo(LocalDate.now());
 
-    LocalDate somePastAfterChristDay = aLocalDate().past().after(LocalDate.of(1, 1, 1)).build();
+    LocalDate somePastAfterChristDay =
+        aLocalDateInRange().past().after(LocalDate.of(1, 1, 1)).build();
     assertThat(somePastAfterChristDay)
         .isBeforeOrEqualTo(LocalDate.now())
         .isAfterOrEqualTo(LocalDate.of(1, 1, 1));
 
     LocalDate someFutureDayInTheNext5Years =
-        aLocalDate().future().before(Year.now().plusYears(5).atDay(1)).build();
+        aLocalDateInRange().future().before(Year.now().plusYears(5).atDay(1)).build();
     assertThat(someFutureDayInTheNext5Years)
         .isAfterOrEqualTo(LocalDate.now())
         .isBeforeOrEqualTo(Year.now().plusYears(5).atDay(1));
 
     LocalDate someLockdownDay =
-        aLocalDate().after(LocalDate.of(2020, 3, 8)).before(LocalDate.of(2020, 5, 4)).build();
+        aLocalDateInRange()
+            .after(LocalDate.of(2020, 3, 8))
+            .before(LocalDate.of(2020, 5, 4))
+            .build();
     assertThat(someLockdownDay).isBetween(LocalDate.of(2020, 3, 8), LocalDate.of(2020, 5, 4));
+    // end::aLocalDateInRange[]
+  }
+
+  @Test
+  void randomLocalDateBuilder_examples() {
+    // tag::aLocalDate[]
+    LocalDate someLocalDate = aLocalDate().build();
+    assertThat(someLocalDate).isBetween(LocalDate.MIN, LocalDate.MAX);
+
+    LocalDate someDateIn2025 = aLocalDate().year(2025).build();
+    assertThat(someDateIn2025.getYear()).isEqualTo(2025);
+
+    LocalDate someDateInMarch = aLocalDate().month(Month.MARCH).build();
+    assertThat(someDateInMarch.getMonth()).isEqualTo(Month.MARCH);
+
+    LocalDate someDateInMarch2025 = aLocalDate().year(2025).month(Month.MARCH).build();
+    assertThat(someDateInMarch2025.getYear()).isEqualTo(2025);
+    assertThat(someDateInMarch2025.getMonth()).isEqualTo(Month.MARCH);
+
+    LocalDate some3rd = aLocalDate().dayOfMonth(3).build();
+    assertThat(some3rd.getDayOfMonth()).isEqualTo(3);
+
+    LocalDate someSunday = aLocalDate().dayOfWeek(DayOfWeek.SUNDAY).build();
+    assertThat(someSunday.getDayOfWeek()).isEqualTo(DayOfWeek.SUNDAY);
+
+    LocalDate someTuesday1999 = aLocalDate().year(1999).dayOfWeek(DayOfWeek.TUESDAY).build();
+    assertThat(someTuesday1999.getDayOfWeek()).isEqualTo(DayOfWeek.TUESDAY);
+    assertThat(someTuesday1999.getYear()).isEqualTo(1999);
     // end::aLocalDate[]
   }
 }

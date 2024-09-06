@@ -174,3 +174,8 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDateB
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDate]
 ----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDateInRange]
+----
