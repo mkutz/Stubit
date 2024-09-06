@@ -121,42 +121,76 @@ public class RandomLocalDate {
     }
   }
 
+  /** Builds a random {@link LocalDate} with specified field values (e.g. year, month). */
   public static class LocalDateBuilder {
 
     private LocalDate localDate = RandomLocalDate.aLocalDateInRange().build();
 
+    /**
+     * @param year the year for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder year(int year) {
       return year(Year.of(year));
     }
 
+    /**
+     * @param year the {@link Year} for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder year(Year year) {
       localDate = localDate.with(year);
       return this;
     }
 
+    /**
+     * @param month the month for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder month(int month) {
       return month(Month.of(month));
     }
 
+    /**
+     * @param month the {@link Month} for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder month(Month month) {
       localDate = localDate.with(month);
       return this;
     }
 
+    /**
+     * @param day the day of the month for the random {@link LocalDate}
+     * @return this
+     * @throws java.time.DateTimeException if {@code day} is not a valid day of the month
+     * @see LocalDate#withDayOfMonth(int)
+     */
     public LocalDateBuilder dayOfMonth(int day) {
       localDate = localDate.withDayOfMonth(day);
       return this;
     }
 
+    /**
+     * @param dayOfWeek the day of the week for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder dayOfWeek(int dayOfWeek) {
       return dayOfWeek(DayOfWeek.of(dayOfWeek));
     }
 
+    /**
+     * @param dayOfWeek the {@link DayOfWeek} for the random {@link LocalDate}
+     * @return this
+     */
     public LocalDateBuilder dayOfWeek(DayOfWeek dayOfWeek) {
       localDate = localDate.with(dayOfWeek);
       return this;
     }
 
+    /**
+     * @return the random {@link LocalDate}
+     */
     public LocalDate build() {
       return localDate;
     }
