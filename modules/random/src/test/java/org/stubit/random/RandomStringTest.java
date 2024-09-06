@@ -2,7 +2,7 @@ package org.stubit.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.stubit.random.RandomInt.anIntBetween;
+import static org.stubit.random.RandomNumber.anIntBetween;
 
 import org.junit.jupiter.api.Test;
 
