@@ -3,7 +3,7 @@ package org.stubit.random;
 import static java.lang.Long.MAX_VALUE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.stubit.random.RandomInt.aPositiveInt;
+import static org.stubit.random.RandomNumber.aPositiveInt;
 
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
