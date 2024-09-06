@@ -37,7 +37,7 @@ public class RandomNumber {
    *     Integer#MIN_VALUE} and {@link RandomIntBuilder#maxInclusive max} {@link Integer#MAX_VALUE}
    *     - 1.
    */
-  public static RandomIntBuilder anInt() {
+  public static RandomNumberBuilder<Integer> anInt() {
     return new RandomIntBuilder(Integer.MIN_VALUE, Integer.MAX_VALUE - 1);
   }
 
@@ -68,12 +68,55 @@ public class RandomNumber {
    * @return a {@link RandomLongBuilder} with {@link RandomLongBuilder#minInclusive min} {@link
    *     Long#MIN_VALUE} and {@link RandomLongBuilder#maxInclusive max} {@link Long#MAX_VALUE} - 1.
    */
-  public static RandomLongBuilder aLong() {
+  public static RandomNumberBuilder<Long> aLong() {
     return new RandomLongBuilder(Long.MIN_VALUE, Long.MAX_VALUE - 1);
   }
 
-  /** Builds a random integer within a specified range. */
-  public static class RandomIntBuilder {
+  /**
+   * Interface for any random number builder.
+   *
+   * @param <N> the type of the number to build
+   */
+  public interface RandomNumberBuilder<N> {
+
+    /**
+     * Sets {@link #min} to 1 and {@link #max} to the maximum of N.
+     *
+     * @return this
+     */
+    RandomNumberBuilder<N> positive();
+
+    /**
+     * Sets {@link #min} to the minimum of N and max to -1.
+     *
+     * @return this
+     */
+    RandomNumberBuilder<N> negative();
+
+    /**
+     * @param minInclusive the minimum value (inclusive)
+     * @return this
+     * @throws IllegalArgumentException if {@code minInclusive} is greater than or equal to {@link
+     *     #max}
+     */
+    RandomNumberBuilder<N> min(N minInclusive);
+
+    /**
+     * @param maxInclusive the maximum value (inclusive)
+     * @return this
+     * @throws IllegalArgumentException if {@code maxInclusive} is less than or equal to {@link
+     *     #min} or if {@code maxInclusive} is equal to the maximum of N
+     */
+    RandomNumberBuilder<N> max(N maxInclusive);
+
+    /**
+     * @return a random integer between {@link #min} and {@link #max}
+     */
+    N build();
+  }
+
+  /** {@link RandomNumberBuilder} implementation for {@link Integer}s */
+  public static class RandomIntBuilder implements RandomNumberBuilder<Integer> {
 
     private final SecureRandom secureRandom = new SecureRandom();
     private int minInclusive;
@@ -102,13 +145,7 @@ public class RandomNumber {
       return min(Integer.MIN_VALUE).max(-1);
     }
 
-    /**
-     * @param minInclusive the minimum value (inclusive)
-     * @return this
-     * @throws IllegalArgumentException if {@code minInclusive} is greater than or equal to {@link
-     *     #maxInclusive}
-     */
-    public RandomIntBuilder min(int minInclusive) {
+    public RandomIntBuilder min(Integer minInclusive) {
       this.minInclusive = minInclusive;
       if (minInclusive > maxInclusive) {
         throw new IllegalArgumentException(
@@ -118,13 +155,7 @@ public class RandomNumber {
       return this;
     }
 
-    /**
-     * @param maxInclusive the maximum value (inclusive)
-     * @return this
-     * @throws IllegalArgumentException if {@code maxInclusive} is less than or equal to {@link
-     *     #minInclusive} or if {@code maxInclusive} is equal to {@link Integer#MAX_VALUE}
-     */
-    public RandomIntBuilder max(int maxInclusive) {
+    public RandomIntBuilder max(Integer maxInclusive) {
       if (maxInclusive < minInclusive) {
         throw new IllegalArgumentException(
             "Can't set max to %d, as it must not be less than min (%d)"
@@ -138,16 +169,13 @@ public class RandomNumber {
       return this;
     }
 
-    /**
-     * @return a random integer between {@link #minInclusive} and {@link #maxInclusive}
-     */
-    public int build() {
+    public Integer build() {
       return secureRandom.nextInt(minInclusive, maxInclusive + 1);
     }
   }
 
-  /** Builds a random long within a specified range. */
-  public static class RandomLongBuilder {
+  /** {@link RandomNumberBuilder} implementation for {@link Long}s */
+  public static class RandomLongBuilder implements RandomNumberBuilder<Long> {
 
     private final SecureRandom secureRandom = new SecureRandom();
     private long minInclusive;
@@ -164,7 +192,7 @@ public class RandomNumber {
      * @return this
      */
     public RandomLongBuilder positive() {
-      return min(1).max(Long.MAX_VALUE - 1);
+      return min(1L).max(Long.MAX_VALUE - 1);
     }
 
     /**
@@ -173,16 +201,10 @@ public class RandomNumber {
      * @return this
      */
     public RandomLongBuilder negative() {
-      return min(Long.MIN_VALUE).max(-1);
+      return min(Long.MIN_VALUE).max(-1L);
     }
 
-    /**
-     * @param minInclusive the minimum value (inclusive)
-     * @return this
-     * @throws IllegalArgumentException if {@code minInclusive} is greater than or equal to {@link
-     *     #maxInclusive}
-     */
-    public RandomLongBuilder min(long minInclusive) {
+    public RandomLongBuilder min(Long minInclusive) {
       this.minInclusive = minInclusive;
       if (minInclusive > maxInclusive) {
         throw new IllegalArgumentException(
@@ -192,13 +214,7 @@ public class RandomNumber {
       return this;
     }
 
-    /**
-     * @param maxInclusive the maximum value (inclusive)
-     * @return this
-     * @throws IllegalArgumentException if {@code maxInclusive} is less than or equal to {@link
-     *     #minInclusive} or if {@code maxInclusive} is equal to {@link Long#MAX_VALUE}
-     */
-    public RandomLongBuilder max(long maxInclusive) {
+    public RandomLongBuilder max(Long maxInclusive) {
       if (maxInclusive < minInclusive) {
         throw new IllegalArgumentException(
             "Can't set max to %d, as it must not be less than min (%d)"
@@ -212,10 +228,7 @@ public class RandomNumber {
       return this;
     }
 
-    /**
-     * @return a random long between {@link #minInclusive} and {@link #maxInclusive}
-     */
-    public long build() {
+    public Long build() {
       return secureRandom.nextLong(minInclusive, maxInclusive + 1);
     }
   }
