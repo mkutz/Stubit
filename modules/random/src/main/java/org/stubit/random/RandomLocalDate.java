@@ -14,12 +14,12 @@ public class RandomLocalDate {
   private RandomLocalDate() {}
 
   /**
-   * @param afterInclusive the minimum value (inclusive)
-   * @param beforeInclusive the maximum value (inclusive)
-   * @return a random {@link LocalDate} between {@code afterInclusive} and {@code beforeInclusive}
+   * @param after the minimum value (inclusive)
+   * @param before the maximum value (inclusive)
+   * @return a random {@link LocalDate} between {@code after} and {@code before}
    */
-  public static LocalDate aLocalDateBetween(LocalDate afterInclusive, LocalDate beforeInclusive) {
-    return aLocalDateInRange().after(afterInclusive).before(beforeInclusive).build();
+  public static LocalDate aLocalDateBetween(LocalDate after, LocalDate before) {
+    return aLocalDateInRange().after(after).before(before).build();
   }
 
   /**
@@ -57,9 +57,9 @@ public class RandomLocalDate {
     private LocalDate after;
     private LocalDate before;
 
-    private LocalDateInRangeBuilder(LocalDate min, LocalDate max) {
-      this.after = min;
-      this.before = max;
+    private LocalDateInRangeBuilder(LocalDate after, LocalDate before) {
+      this.after = after;
+      this.before = before;
     }
 
     /**
@@ -81,32 +81,32 @@ public class RandomLocalDate {
     }
 
     /**
-     * @param afterIncluding the minimum value (inclusive)
+     * @param after the minimum value (inclusive)
      * @return this
-     * @throws IllegalArgumentException if {@code afterIncluding} is after {@link #before}
+     * @throws IllegalArgumentException if {@code after} is after {@link #before}
      */
-    public LocalDateInRangeBuilder after(LocalDate afterIncluding) {
-      if (afterIncluding.isAfter(before)) {
+    public LocalDateInRangeBuilder after(LocalDate after) {
+      if (after.isAfter(before)) {
         throw new IllegalArgumentException(
             "Can't set after to %s, as it must not be greater than before (%s)"
-                .formatted(afterIncluding, before));
+                .formatted(after, before));
       }
-      this.after = afterIncluding;
+      this.after = after;
       return this;
     }
 
     /**
-     * @param beforeIncluding the maximum value (inclusive)
+     * @param before the maximum value (inclusive)
      * @return this
-     * @throws IllegalArgumentException if {@code beforeIncluding} is before {@link #after}
+     * @throws IllegalArgumentException if {@code before} is before {@link #after}
      */
-    public LocalDateInRangeBuilder before(LocalDate beforeIncluding) {
-      if (beforeIncluding.isBefore(after)) {
+    public LocalDateInRangeBuilder before(LocalDate before) {
+      if (before.isBefore(after)) {
         throw new IllegalArgumentException(
             "Can't set before to %s, as it must not be less than after (%s)"
-                .formatted(beforeIncluding, after));
+                .formatted(before, after));
       }
-      this.before = beforeIncluding;
+      this.before = before;
       return this;
     }
 
