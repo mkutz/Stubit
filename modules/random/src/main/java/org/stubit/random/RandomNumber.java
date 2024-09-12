@@ -1,5 +1,6 @@
 package org.stubit.random;
 
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import org.jspecify.annotations.NullMarked;
 
@@ -70,6 +71,37 @@ public class RandomNumber {
    */
   public static RandomNumberBuilder<Long> aLong() {
     return new RandomLongBuilder(Long.MIN_VALUE, Long.MAX_VALUE - 1);
+  }
+
+  /**
+   * @param minInclusive the minimum value (inclusive)
+   * @param maxInclusive the maximum value (inclusive)
+   * @return a random float between {@code minInclusive} and {@code maxInclusive}
+   */
+  public static float aFloatBetween(float minInclusive, float maxInclusive) {
+    return aFloat().min(minInclusive).max(maxInclusive).build();
+  }
+
+  /**
+   * @return a random float between -{@link Float#MAX_VALUE} and {@link Float#MIN_VALUE}
+   */
+  public static float aNegativeFloat() {
+    return aFloat().negative().build();
+  }
+
+  /**
+   * @return a random float between {@link Float#MIN_VALUE} and {@link Float#MAX_VALUE}
+   */
+  public static float aPositiveFloat() {
+    return aFloat().positive().build();
+  }
+
+  /**
+   * @return a {@link RandomFloatBuilder} with {@link RandomFloatBuilder#minInclusive min} -{@link
+   *     Float#MAX_VALUE} and {@link RandomFloatBuilder#maxInclusive max} {@link Float#MAX_VALUE}.
+   */
+  public static RandomFloatBuilder aFloat() {
+    return new RandomFloatBuilder(-Float.MAX_VALUE, Float.MAX_VALUE);
   }
 
   /**
@@ -230,6 +262,60 @@ public class RandomNumber {
 
     public Long build() {
       return secureRandom.nextLong(minInclusive, maxInclusive + 1);
+    }
+  }
+
+  /** {@link RandomNumberBuilder} implementation for {@link BigDecimal}s */
+  public static class RandomFloatBuilder implements RandomNumberBuilder<Float> {
+
+    private final SecureRandom secureRandom = new SecureRandom();
+    private BigDecimal minInclusive;
+    private BigDecimal maxInclusive;
+
+    private RandomFloatBuilder(float min, float max) {
+      this.minInclusive = BigDecimal.valueOf(min);
+      this.maxInclusive = BigDecimal.valueOf(max);
+    }
+
+    @Override
+    public RandomFloatBuilder positive() {
+      return min(Float.MIN_VALUE).max(Float.MAX_VALUE - Float.MIN_VALUE);
+    }
+
+    @Override
+    public RandomFloatBuilder negative() {
+      return min(-Float.MAX_VALUE).max(Float.MIN_VALUE);
+    }
+
+    @Override
+    public RandomFloatBuilder min(Float minInclusiveFloat) {
+      var minInclusive = BigDecimal.valueOf(minInclusiveFloat);
+      if (minInclusive.compareTo(maxInclusive) > 0) {
+        throw new IllegalArgumentException(
+            "Can't set min to %f, as it must not be greater than max (%f)"
+                .formatted(minInclusive, maxInclusive));
+      }
+      this.minInclusive = minInclusive;
+      return this;
+    }
+
+    @Override
+    public RandomFloatBuilder max(Float maxInclusiveFloat) {
+      var maxInclusive = BigDecimal.valueOf(maxInclusiveFloat);
+      if (maxInclusive.compareTo(minInclusive) < 0) {
+        throw new IllegalArgumentException(
+            "Can't set max to %f, as it must not be less than min (%f)"
+                .formatted(maxInclusive, minInclusive));
+      }
+      this.maxInclusive = maxInclusive;
+      return this;
+    }
+
+    @Override
+    public Float build() {
+      return secureRandom.nextFloat(
+          minInclusive.floatValue(),
+          maxInclusive.add(BigDecimal.valueOf(Float.MIN_NORMAL)).floatValue());
     }
   }
 }

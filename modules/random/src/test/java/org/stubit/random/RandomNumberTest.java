@@ -70,4 +70,36 @@ class RandomNumberTest {
   void aNegativeLong() {
     assertThat(RandomNumber.aNegativeLong()).isBetween(Long.MIN_VALUE, 1L);
   }
+
+  @Test
+  void aFloatBetween() {
+    float min = 42.1f;
+    float max = Float.MAX_VALUE;
+    assertThat(RandomNumber.aFloatBetween(min, max)).isBetween(min, max);
+  }
+
+  @Test
+  void aFloatBetween_min_equal_to_max() {
+    float min = 42f;
+    assertThat(RandomNumber.aFloatBetween(min, min)).isEqualTo(min);
+  }
+
+  @Test
+  void aFloatBetween_min_greater_than_max() {
+    float max = 42.1f;
+    assertThatIllegalArgumentException()
+        .isThrownBy(() -> RandomNumber.aFloatBetween(max + 1, max))
+        .withMessage(
+            "Can't set max to %f, as it must not be less than min (%f)".formatted(max, max + 1));
+  }
+
+  @Test
+  void aPositiveFloat() {
+    assertThat(RandomNumber.aPositiveFloat()).isBetween(Float.MIN_VALUE, Float.MAX_VALUE);
+  }
+
+  @Test
+  void aNegativeFloat() {
+    assertThat(RandomNumber.aNegativeFloat()).isBetween(-Float.MAX_VALUE, Float.MIN_VALUE);
+  }
 }
