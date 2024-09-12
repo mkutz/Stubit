@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.time.LocalTime;
 import org.jspecify.annotations.NullMarked;
 
+/** Generates random {@link LocalTime}s. */
 @NullMarked
 public class RandomLocalTime {
 
