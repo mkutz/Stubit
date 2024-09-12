@@ -179,3 +179,22 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDate]
 ----
 include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDateInRange]
 ----
+
+== Random Time
+
+The link:{javadoc-url}/random/org/stubit/random/RandomLocalTime.html[`RandomLocalTime` class] allows to generate random LocalTimes.
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTimeBetween]
+----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTime]
+----
+
+[source,java,indent=0]
+----
+include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTimeInRange]
+----

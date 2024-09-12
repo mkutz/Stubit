@@ -10,6 +10,9 @@ import static org.stubit.random.RandomDuration.aDurationBetween;
 import static org.stubit.random.RandomLocalDate.aLocalDate;
 import static org.stubit.random.RandomLocalDate.aLocalDateBetween;
 import static org.stubit.random.RandomLocalDate.aLocalDateInRange;
+import static org.stubit.random.RandomLocalTime.aLocalDateBetween;
+import static org.stubit.random.RandomLocalTime.aLocalTime;
+import static org.stubit.random.RandomLocalTime.aLocalTimeInRange;
 import static org.stubit.random.RandomNumber.aLong;
 import static org.stubit.random.RandomNumber.aLongBetween;
 import static org.stubit.random.RandomNumber.aNegativeInt;
@@ -28,6 +31,7 @@ import static org.stubit.random.RandomString.lettersFrom;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
 import java.util.List;
@@ -306,5 +310,49 @@ class RandomDocTest {
     assertThat(someTuesday1999.getDayOfWeek()).isEqualTo(DayOfWeek.TUESDAY);
     assertThat(someTuesday1999.getYear()).isEqualTo(1999);
     // end::aLocalDate[]
+  }
+
+  @Test
+  void randomLocalTime_examples() {
+    // tag::aLocalTimeBetween[]
+    LocalTime someTimeBusinessHours = aLocalDateBetween(LocalTime.of(9, 0), LocalTime.of(17, 0, 0));
+    assertThat(someTimeBusinessHours).isBetween(LocalTime.of(9, 0), LocalTime.of(17, 0));
+    // end::aLocalTimeBetween[]
+  }
+
+  @Test
+  void randomLocalTimeInRangeBuilder_examples() {
+    // tag::aLocalTimeInRange[]
+    LocalTime someLocalTime = aLocalTimeInRange().build();
+    assertThat(someLocalTime).isBetween(LocalTime.MIN, LocalTime.MAX);
+
+    LocalTime someFutureTime = aLocalTimeInRange().future().build();
+    assertThat(someFutureTime).isAfterOrEqualTo(LocalTime.now());
+
+    LocalTime somePastTime = aLocalTimeInRange().past().build();
+    assertThat(somePastTime).isBeforeOrEqualTo(LocalTime.now());
+
+    LocalTime someTimeAfterNoon = aLocalTimeInRange().after(LocalTime.NOON).build();
+    assertThat(someTimeAfterNoon).isAfterOrEqualTo(LocalTime.NOON);
+    // end::aLocalTimeInRange[]
+  }
+
+  @Test
+  void randomLocalTimeBuilder_examples() {
+    // tag::aLocalTime[]
+    LocalTime someLocalTime = aLocalTime().build();
+    assertThat(someLocalTime).isBetween(LocalTime.MIN, LocalTime.MAX);
+
+    LocalTime someTimeAt12 = aLocalTime().hour(12).build();
+    assertThat(someTimeAt12.getHour()).isEqualTo(12);
+
+    LocalTime someHalfTime = aLocalTime().minute(30).build();
+    assertThat(someHalfTime.getMinute()).isEqualTo(30);
+
+    LocalTime someTimeAlmostFull = aLocalTime().minute(59).second(59).nano(999_999_999).build();
+    assertThat(someTimeAlmostFull.getMinute()).isEqualTo(59);
+    assertThat(someTimeAlmostFull.getSecond()).isEqualTo(59);
+    assertThat(someTimeAlmostFull.getNano()).isEqualTo(999_999_999);
+    // end::aLocalTime[]
   }
 }
