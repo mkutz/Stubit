@@ -15,7 +15,7 @@ public class RandomLocalTime {
    * @param before the maximum value (inclusive)
    * @return a random {@link LocalTime} between {@code after} and {@code before}
    */
-  public static LocalTime aLocalDateBetween(LocalTime after, LocalTime before) {
+  public static LocalTime aLocalTimeBetween(LocalTime after, LocalTime before) {
     return aLocalTimeInRange().after(after).before(before).build();
   }
 

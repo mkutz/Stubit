@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 class RandomLocalTimeTest {
 
   @Test
-  void aLocalDateBetween_min_equal_to_max() {
+  void aLocalTimeBetween_min_equal_to_max() {
     LocalTime min = LocalTime.now();
-    assertThat(RandomLocalTime.aLocalDateBetween(min, min)).isEqualTo(min);
+    assertThat(RandomLocalTime.aLocalTimeBetween(min, min)).isEqualTo(min);
   }
 
   @Test
