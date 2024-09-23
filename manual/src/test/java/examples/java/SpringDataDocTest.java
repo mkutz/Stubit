@@ -1,4 +1,4 @@
-package org.stubit.springdata;
+package examples.java;
 
 import static java.util.UUID.randomUUID;
 import static java.util.stream.StreamSupport.stream;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.CrudRepository;
+import org.stubit.springdata.CrudRepositoryStub;
 
 class SpringDataDocTest {
 

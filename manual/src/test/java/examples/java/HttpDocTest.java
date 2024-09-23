@@ -1,4 +1,4 @@
-package org.stubit.http;
+package examples.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,6 +8,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.junit.jupiter.api.Test;
+import org.stubit.http.HttpStub;
+import org.stubit.http.StubbedResponse;
+import org.stubit.http.Stubbing;
 
 @SuppressWarnings("ALL")
 class HttpDocTest {

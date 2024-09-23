@@ -17,50 +17,94 @@ This is due to the fact that the `SecureRandom.nextInt(int)` and `SecureRandom.n
 
 === Between Min and Max
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anIntBetween]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anIntBetween]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLongBetween]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLongBetween]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anIntBetween]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLongBetween]
 ----
 
 
 === Positive Integer/Long
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveInt]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aPositiveInt]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aPositiveInt]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aPositiveLong]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aPositiveLong]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aPositiveLong]
 ----
 
 
 === Negative Integer/Long
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeInt]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aNegativeInt]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aNegativeInt]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aNegativeLong]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aNegativeLong]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aNegativeLong]
 ----
 
 
 === Builder
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anInt]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anInt]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anInt]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLong]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLong]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLong]
 ----
 
 
@@ -74,59 +118,106 @@ More complex selections can be defined with a Builder class that's returned by t
 
 === From Collection
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_list]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anyOf_list]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_map]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anyOf_map]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anyOf_list]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anyOf_map]
 ----
 
 
 === From Array
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_ellipsis]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anyOf_ellipsis]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=anyOf_array]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=anyOf_array]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anyOf_ellipsis]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=anyOf_array]
 ----
 
 
 === From Enum Type
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=any_enum]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=any_enum]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=any_enum]
 ----
 
 === Builder
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_ellipsis]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aChoiceFrom_ellipsis]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_array]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aChoiceFrom_array]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_list]
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFrom_map]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aChoiceFrom_list]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aChoiceFrom_map]
 
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aChoiceFromValuesOf_enum]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aChoiceFromValuesOf_enum]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aChoiceFrom_ellipsis]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aChoiceFrom_array]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aChoiceFrom_list]
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aChoiceFrom_map]
+
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aChoiceFromValuesOf_enum]
 ----
 
 
 ==== Additional Choices
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=and]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=and]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=and]
 ----
 
 
 ==== Excluding Choices
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=butNot]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=butNot]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=butNot]
 ----
 
 
@@ -134,16 +225,30 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=butNot]
 
 The link:{javadoc-url}/random/org/stubit/random/RandomString.html[`RandomString` class] allows to generate random Strings.
 
-[source,java,indent=0]
-.Random German licence plate
+E.g. to generate a random German licence plate:
+
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=germanLicensePlate]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=germanLicensePlate]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=germanLicensePlate]
 ----
 
-[source,java,indent=0]
-.Random Iranian licence plate
+Or an Iranian licence plate:
+
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=iranianLicensePlate]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=iranianLicensePlate]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Java
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=iranianLicensePlate]
 ----
 
 
@@ -151,50 +256,88 @@ include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=iranianLice
 
 The link:{javadoc-url}/random/org/stubit/random/RandomDuration.html[`RandomDuration` class] allows to generate random Durations.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aDurationBetween]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aDurationBetween]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aDuration]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aDuration]
 ----
 
 == Random Date
 
 The link:{javadoc-url}/random/org/stubit/random/RandomLocalDate.html[`RandomLocalDate` class] allows to generate random LocalDates.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDateBetween]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalDateBetween]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalDateBetween]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDate]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalDate]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalDate]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalDateInRange]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalDateInRange]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalDateInRange]
 ----
 
 == Random Time
 
 The link:{javadoc-url}/random/org/stubit/random/RandomLocalTime.html[`RandomLocalTime` class] allows to generate random LocalTimes.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTimeBetween]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalTimeBetween]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalTimeBetween]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTime]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalTime]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalTime]
 ----
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/random/RandomDocTest.java[tag=aLocalTimeInRange]
+include::../../../test/java/examples/java/RandomDocTest.java[tag=aLocalTimeInRange]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aLocalTimeInRange]
 ----
