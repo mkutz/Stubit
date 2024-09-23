@@ -7,16 +7,28 @@ The HTTP module contains a simple HTTP server, which can be started locally to s
 
 Instantiating the link:{javadoc-url}/http/org/stubit/http/HttpStub.html[`HttpStub` class] automatically starts the stub at a random local port.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=create]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=create]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=create]
 ----
 
 You can get its address via the link:{javadoc-url}/http/org/stubit/http/HttpStub.html#address()[`address` method]
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=address]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=address]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=address]
 ----
 
 
@@ -24,9 +36,15 @@ include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=address]
 
 By default, the stub will return a 404 response for any path and any method but POST.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=get-unstubbed]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=get-unstubbed]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=get-unstubbed]
 ----
 
 
@@ -34,16 +52,28 @@ include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=get-unstubbed]
 
 POST requests will by default return a 201 response for any path.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=post-unstubbed]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=post-unstubbed]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=post-unstubbed]
 ----
 
 The body of the request will be returned for subsequent GET requests.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=get-posted]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=get-posted]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=get-posted]
 ----
 
 NOTE: This behaviour is likely to change in future releases!
@@ -53,9 +83,15 @@ NOTE: This behaviour is likely to change in future releases!
 
 You can create a stubbing via the link:{javadoc-url}/http/org/stubit/http/Stubbing.html#stub()[`Stubbing.stub()` method]
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=create-stubbing]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=create-stubbing]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=create-stubbing]
 ----
 <1> Specifies the path for the stubbing.
 <2> Specifies the method.
@@ -63,14 +99,26 @@ include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=create-stubbing
 
 The link:{javadoc-url}/http/org/stubit/http/Stubbing.html[`Stubbing`] then needs to be added via the link:{javadoc-url}/http/org/stubit/http/HttpStub.html#add(org.stubit.http.Stubbing...)[`add` method]
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=add-stubbing]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=add-stubbing]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=add-stubbing]
 ----
 
 Further requests matching the link:{javadoc-url}/http/org/stubit/http/Stubbing.html[`Stubbing`] will now return the link:{javadoc-url}/http/org/stubit/http/StubbedRequest.html[`StubbedRequest`] instead of the default response.
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/http/HttpDocTest.java[tag=request-stubbing]
+include::../../../test/java/examples/java/HttpDocTest.java[tag=request-stubbing]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=request-stubbing]
 ----
