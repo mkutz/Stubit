@@ -5,7 +5,8 @@ Michael Kutz <mail@michael-kutz.de>
 :icons: font
 :sectlinks:
 :sectanchors:
-:source-highlighter: coderay
+:source-highlighter: highlight.js
+:highlightjs-languages: java, kotlin, xml, properties
 :hide-uri-scheme:
 :javadoc-url: http://stubit.org/javadoc
 
