@@ -9,26 +9,44 @@ For instance, if we want to create a test for a service, which injects a CrudRep
 
 Let's assume we have a service `TestService`, which injects a Spring Data `CrudRepository` named `TestCrudRepository`:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=service, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=service]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=service]
 ----
 
 We want to test this service without accessing the database and without specifying its internal behaviour (via a Mock).
 
 `TestCrudRepository` is a typical Spring Data repository interface with only one additional method `findByName`:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=repository, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=repository]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=repository]
 ----
 
 In oder to create a stub, we need to implement this interface.
 By extending from the link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryStub.html[`CrudRepositoryStub`], this only requires to implement the `findByName` method:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=implement, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=implement]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=implement]
 ----
 
 
@@ -36,25 +54,44 @@ include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=imp
 
 In a test we can now use the `TestCrudRepositoryStub` instead of the real repository:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=create, indent=0]
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=inject, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=create]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=inject]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=create]
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=inject]
 ----
 
 Now we can prepare our test scenario by simply adding entities to the stub.
 Either one-by-one:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=fillSingle, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=fillSingle]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=fillSingle]
 ----
 
 Or multiple at once:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=fillMultiple, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=fillMultiple]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=fillMultiple]
 ----
 
 It is quite handy, that the save methods of a `CrudRepository` return the saved entity, so we can easily add the entity to the stub and use the returned entity in our test.
@@ -64,9 +101,15 @@ It is quite handy, that the save methods of a `CrudRepository` return the saved 
 
 After the test, we can verify the stub by checking the entities in the stub:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=verify, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=verify]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=verify]
 ----
 
 
@@ -77,7 +120,13 @@ Note that a link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryS
 However, that might require to recreate the service as well.
 So, if we want to reuse the stub, we can simply use the `deleteAll` method to clear the stub:
 
-[source,java,indent=0]
+[source,java,indent=0,role="primary"]
+.Java
 ----
-include::../../../test/java/org/stubit/springdata/SpringDataDocTest.java[tag=clear, indent=0]
+include::../../../test/java/examples/java/SpringDataDocTest.java[tag=clear]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=clear]
 ----

@@ -1,4 +1,4 @@
-package org.stubit.random;
+package examples.java;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.stubit.random.RandomChoice.aChoiceFrom;
@@ -37,6 +37,8 @@ import java.time.Year;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.stubit.random.Alphabet;
+import org.stubit.random.DigitSystem;
 
 class RandomDocTest {
 
