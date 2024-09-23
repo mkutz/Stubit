@@ -246,7 +246,7 @@ Or an Iranian licence plate:
 include::../../../test/java/examples/java/RandomDocTest.java[tag=iranianLicensePlate]
 ----
 [source,kotlin,indent=0,role="secondary"]
-.Java
+.Kotlin
 ----
 include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=iranianLicensePlate]
 ----
@@ -261,11 +261,21 @@ The link:{javadoc-url}/random/org/stubit/random/RandomDuration.html[`RandomDurat
 ----
 include::../../../test/java/examples/java/RandomDocTest.java[tag=aDurationBetween]
 ----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aDurationBetween]
+----
 
 [source,java,indent=0,role="primary"]
 .Java
 ----
 include::../../../test/java/examples/java/RandomDocTest.java[tag=aDuration]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/RandomDocTest.kt[tag=aDuration]
 ----
 
 == Random Date
