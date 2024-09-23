@@ -14,13 +14,11 @@ To use Stubit in your own project, you need to add it as a dependency to your pr
 ----
 implementation 'org.stubit:http:{revnumber}'
 ----
-
 .Gradle.kts
-[source,kotlin,subs=attributes+,role="primary"]
+[source,kotlin,subs=attributes+,role="secondary"]
 ----
 implementation("org.stubit:http:{revnumber}")
 ----
-
 .Maven
 [source,xml,subs=attributes+,role="secondary"]
 ----
@@ -44,14 +42,12 @@ If you want to use more than one module in the same project, you can use Stubit'
 implementation platform('org.stubit:bom:{revnumber}')
 implementation 'org.stubit:http'
 ----
-
 .Gradle.kts
-[source,kotlin,subs=attributes+,role="primary"]
+[source,kotlin,subs=attributes+,role="secondary"]
 ----
 implementation(platform("org.stubit:bom:{revnumber}"))
 implementation("org.stubit:http")
 ----
-
 .Maven
 [source,xml,subs=attributes+,role="secondary"]
 ----
