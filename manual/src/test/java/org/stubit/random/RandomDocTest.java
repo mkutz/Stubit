@@ -10,8 +10,8 @@ import static org.stubit.random.RandomDuration.aDurationBetween;
 import static org.stubit.random.RandomLocalDate.aLocalDate;
 import static org.stubit.random.RandomLocalDate.aLocalDateBetween;
 import static org.stubit.random.RandomLocalDate.aLocalDateInRange;
-import static org.stubit.random.RandomLocalTime.aLocalDateBetween;
 import static org.stubit.random.RandomLocalTime.aLocalTime;
+import static org.stubit.random.RandomLocalTime.aLocalTimeBetween;
 import static org.stubit.random.RandomLocalTime.aLocalTimeInRange;
 import static org.stubit.random.RandomNumber.aLong;
 import static org.stubit.random.RandomNumber.aLongBetween;
@@ -315,7 +315,7 @@ class RandomDocTest {
   @Test
   void randomLocalTime_examples() {
     // tag::aLocalTimeBetween[]
-    LocalTime someTimeBusinessHours = aLocalDateBetween(LocalTime.of(9, 0), LocalTime.of(17, 0, 0));
+    LocalTime someTimeBusinessHours = aLocalTimeBetween(LocalTime.of(9, 0), LocalTime.of(17, 0, 0));
     assertThat(someTimeBusinessHours).isBetween(LocalTime.of(9, 0), LocalTime.of(17, 0));
     // end::aLocalTimeBetween[]
   }
