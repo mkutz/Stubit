@@ -88,6 +88,10 @@ You can create a stubbing via the link:{javadoc-url}/http/org/stubit/http/Stubbi
 ----
 include::../../../test/java/examples/java/HttpDocTest.java[tag=create-stubbing]
 ----
+<1> Specifies the path for the stubbing.
+<2> Specifies the method.
+<3> Specifies the response that will be returned.
+
 [source,kotlin,indent=0,role="secondary"]
 .Kotlin
 ----
