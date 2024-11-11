@@ -22,6 +22,15 @@ class CrudRepositoryStubTest {
   }
 
   @Test
+  void save_embeddedId() {
+    var repository = new EmbeddedIdTestCrudRepositoryStub();
+
+    EmbeddedIdTestEntity entity = repository.save(EmbeddedIdTestEntity.randomEntity());
+
+    assertThat(repository.findById(entity.getId())).isPresent().get().isEqualTo(entity);
+  }
+
+  @Test
   void saveAll() {
     var repository = new TestCrudRepositoryStub();
 
@@ -108,6 +117,17 @@ class CrudRepositoryStubTest {
   }
 
   @Test
+  void delete_embeddedId() {
+    var repository = new EmbeddedIdTestCrudRepositoryStub();
+    var entity = repository.save(EmbeddedIdTestEntity.randomEntity());
+    assumeThat(repository.existsById(entity.getId())).isTrue();
+
+    repository.delete(entity);
+
+    assertThat(repository.existsById(entity.getId())).isFalse();
+  }
+
+  @Test
   void deleteAllById() {
     var repository = new TestCrudRepositoryStub();
     var entities =
@@ -130,6 +150,18 @@ class CrudRepositoryStubTest {
   }
 
   @Test
+  void deleteAll_entities_embeddedId() {
+    var repository = new EmbeddedIdTestCrudRepositoryStub();
+    var entities =
+        repository.saveAll(
+            List.of(EmbeddedIdTestEntity.randomEntity(), EmbeddedIdTestEntity.randomEntity()));
+
+    repository.deleteAll(entities);
+
+    assertThat(repository.count()).isZero();
+  }
+
+  @Test
   void deleteAll() {
     var repository = new TestCrudRepositoryStub();
     repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
@@ -140,6 +172,9 @@ class CrudRepositoryStubTest {
   }
 
   private static class TestCrudRepositoryStub extends CrudRepositoryStub<TestEntity, UUID> {}
+
+  private static class EmbeddedIdTestCrudRepositoryStub
+      extends CrudRepositoryStub<EmbeddedIdTestEntity, EmbeddedIdTestEntity.Id> {}
 
   private static List<UUID> idsOf(Iterable<TestEntity> entities) {
     return stream(entities.spliterator(), false).map(TestEntity::getUuid).toList();

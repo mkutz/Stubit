@@ -18,15 +18,16 @@ public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
 
   /**
    * Extracts the {@link org.springframework.data.annotation.Id} or {@link jakarta.persistence.Id}
-   * annotated field value from the entity.
+   * or {@link jakarta.persistence.EmbeddedId} annotated field value from the entity.
    *
    * @param entity the entity to extract the id from
-   * @return the value of the {@code Id} annotated field.
+   * @return the value of the {@code Id} or {@code EmbeddedId} annotated field.
    */
   protected ID getId(T entity) {
     for (Field field : entity.getClass().getDeclaredFields()) {
       if (field.getAnnotation(org.springframework.data.annotation.Id.class) != null
-          || field.getAnnotation(jakarta.persistence.Id.class) != null) {
+          || field.getAnnotation(jakarta.persistence.Id.class) != null
+          || field.getAnnotation(jakarta.persistence.EmbeddedId.class) != null) {
         try {
           field.setAccessible(true);
           return (ID) field.get(entity);
@@ -36,6 +37,6 @@ public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
       }
     }
 
-    throw new IllegalArgumentException("No Id annotated field found in the entity");
+    throw new IllegalArgumentException("No Id or EmbeddedId annotated field found in the entity");
   }
 }
