@@ -29,7 +29,7 @@ public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
           || field.getAnnotation(jakarta.persistence.Id.class) != null
           || field.getAnnotation(jakarta.persistence.EmbeddedId.class) != null) {
         try {
-          field.setAccessible(true);
+          field.trySetAccessible();
           return (ID) field.get(entity);
         } catch (IllegalAccessException e) {
           throw new RuntimeException(e);
