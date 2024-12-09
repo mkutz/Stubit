@@ -3,7 +3,6 @@ package org.stubit.springdata;
 import static java.util.UUID.randomUUID;
 import static java.util.stream.StreamSupport.stream;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import java.util.List;
@@ -72,8 +71,7 @@ class ListCrudRepositoryStubTest {
     var unknownId = randomUUID();
     var ids = List.of(knownEntity.getUuid(), unknownId);
 
-    assertThatExceptionOfType(IllegalArgumentException.class)
-        .isThrownBy(() -> repository.findAllById(ids));
+    assertThat(repository.findAllById(ids)).containsExactly(knownEntity);
   }
 
   @Test

@@ -48,10 +48,9 @@ public abstract class CrudRepositoryStub<T, ID> extends RepositoryStub<T, ID>
     List<T> found = new ArrayList<>();
     ids.forEach(
         id -> {
-          if (!data.containsKey(id)) {
-            throw new IllegalArgumentException("No entity with id %s".formatted(id));
+          if (data.containsKey(id)) {
+            found.add(data.get(id));
           }
-          found.add(data.get(id));
         });
     return found;
   }
