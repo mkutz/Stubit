@@ -30,7 +30,7 @@ spotless {
     targetExclude("**/build/**/*", "**/.idea/**")
     trimTrailingWhitespace()
     endWithNewline()
-    indentWithSpaces(2)
+    leadingTabsToSpaces(2)
   }
 
   java {
@@ -38,13 +38,13 @@ spotless {
     targetExclude("**/build/**/*")
     googleJavaFormat().reflowLongStrings()
     removeUnusedImports()
-    indentWithSpaces(2)
+    leadingTabsToSpaces(2)
   }
 
   kotlinGradle {
     target("**/*.gradle.kts")
     targetExclude("**/build/**/*.gradle.kts")
-    ktfmt().googleStyle()
+    ktfmt().googleStyle().configure { it.setManageTrailingCommas(false) }
   }
 
   freshmark { target("*.md") }

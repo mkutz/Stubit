@@ -40,8 +40,6 @@ publishing {
 signing {
   isRequired = !version.toString().endsWith("SNAPSHOT")
   useInMemoryPgpKeys(
-    findProperty("signingKey")?.toString(),
-    findProperty("signingPassword")?.toString()
-  )
+    findProperty("signingKey")?.toString(), findProperty("signingPassword")?.toString())
   sign(publishing.publications[name])
 }
