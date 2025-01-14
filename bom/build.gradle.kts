@@ -16,8 +16,6 @@ dependencies {
 signing {
   setRequired({ !version.toString().endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("publish") })
   useInMemoryPgpKeys(
-    findProperty("signingKey")?.toString(),
-    findProperty("signingPassword")?.toString()
-  )
+    findProperty("signingKey")?.toString(), findProperty("signingPassword")?.toString())
   sign(publishing.publications[name])
 }
