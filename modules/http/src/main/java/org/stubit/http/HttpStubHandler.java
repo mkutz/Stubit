@@ -9,11 +9,19 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
-record HttpStubHandler(String baseUri, List<Stubbing> stubbedResponses) implements HttpHandler {
+record HttpStubHandler(
+    String baseUri, List<Stubbing> stubbedResponses, Stack<HttpRequest> receivedRequests)
+    implements HttpHandler {
+
+  HttpStubHandler(String baseUri) {
+    this(baseUri, new ArrayList<>(), new Stack<>());
+  }
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
@@ -22,6 +30,7 @@ record HttpStubHandler(String baseUri, List<Stubbing> stubbedResponses) implemen
             httpExchange.getRequestMethod(),
             httpExchange.getRequestURI(),
             new String(httpExchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8));
+    receivedRequests.add(request);
     final var response =
         switch (request.method()) {
           case "POST" -> handlePostRequest(request);

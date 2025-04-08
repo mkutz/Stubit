@@ -92,4 +92,26 @@ class HttpDocTest {
       // end::request-stubbing[]
     }
   }
+
+  @Test
+  void get_received_requests() throws IOException {
+    try (var httpStub = new HttpStub()) {
+      // tag::get_received_requests[]
+      var getRequest = new Request.Builder().url(httpStub.address() + "/some/where").build();
+      okHttpClient.newCall(getRequest).execute();
+      var postRequest =
+          new Request.Builder()
+              .url(httpStub.address() + "/some/where")
+              .post(RequestBody.create("Hello".getBytes(StandardCharsets.UTF_8)))
+              .build();
+      okHttpClient.newCall(postRequest).execute();
+
+      assertThat(httpStub.receivedRequests()).hasSize(2);
+      assertThat(httpStub.receivedRequests(request -> "GET".equals(request.method())))
+          .singleElement();
+      assertThat(httpStub.receivedRequests(request -> "POST".equals(request.method())))
+          .singleElement();
+      // end::get_received_requests[]
+    }
+  }
 }

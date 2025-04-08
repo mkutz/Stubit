@@ -5,7 +5,8 @@ import static java.util.Collections.addAll;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 import org.jspecify.annotations.NullMarked;
 
 /**
@@ -29,7 +30,7 @@ public class HttpStub implements AutoCloseable {
       httpServer = HttpServer.create(new InetSocketAddress(0), 0);
       httpServer.start();
       address = "http://localhost:%d".formatted(httpServer.getAddress().getPort());
-      handler = new HttpStubHandler(address, new ArrayList<>());
+      handler = new HttpStubHandler(address);
       httpServer.createContext("/", handler);
     } catch (IOException e) {
       throw new HttpStubCreationException(e);
@@ -52,6 +53,7 @@ public class HttpStub implements AutoCloseable {
    */
   public HttpStub reset() {
     handler.stubbedResponses().clear();
+    handler.receivedRequests().clear();
     return this;
   }
 
@@ -60,6 +62,25 @@ public class HttpStub implements AutoCloseable {
    */
   public String address() {
     return address;
+  }
+
+  /**
+   * Returns all received request that match the given predicate.
+   *
+   * @param predicate a {@link HttpRequest} {@link Predicate}
+   * @return the first received request that matches the given predicate
+   */
+  public List<HttpRequest> receivedRequests(Predicate<HttpRequest> predicate) {
+    return handler.receivedRequests().stream().filter(predicate).toList();
+  }
+
+  /**
+   * Returns all received requests.
+   *
+   * @return all received requests
+   */
+  public List<HttpRequest> receivedRequests() {
+    return handler.receivedRequests();
   }
 
   @Override

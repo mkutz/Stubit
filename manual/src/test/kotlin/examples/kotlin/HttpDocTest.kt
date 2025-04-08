@@ -89,4 +89,20 @@ class HttpDocTest {
       // end::request-stubbing[]
     }
   }
+
+  @Test
+  fun received_requests() {
+    HttpStub().use { httpStub ->
+      // tag::get_received_requests[]
+      val getRequest = Request.Builder().url("${httpStub.address()}/some/where").build()
+      okHttpClient.newCall(getRequest).execute()
+      val postRequest = Request.Builder().url("${httpStub.address()}/some/where").post("Hello".toRequestBody()).build()
+      okHttpClient.newCall(postRequest).execute()
+
+      assertThat(httpStub.receivedRequests()).hasSize(2)
+      assertThat(httpStub.receivedRequests { it.method == "GET" }).singleElement()
+      assertThat(httpStub.receivedRequests { it.method == "POST" }).singleElement()
+      // end::get_received_requests[]
+    }
+  }
 }

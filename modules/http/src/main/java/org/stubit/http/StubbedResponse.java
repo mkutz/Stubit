@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 
 /**
  * A {@link StubbedResponse} defines the response that will be returned by the stub.
@@ -17,8 +16,7 @@ import org.jspecify.annotations.Nullable;
  * @param headers headers that will be set in the response
  */
 @NullMarked
-public record StubbedResponse(
-    int statusCode, @Nullable String body, @Nullable Map<String, List<String>> headers) {
+public record StubbedResponse(int statusCode, String body, Map<String, List<String>> headers) {
 
   /**
    * @return a newly created {@link Builder}
@@ -30,7 +28,7 @@ public record StubbedResponse(
   /** A fluent API builder for {@link StubbedResponse}. */
   public static class Builder {
 
-    private @Nullable String body;
+    private String body = "";
 
     private final Map<String, List<String>> headers = new HashMap<>();
 

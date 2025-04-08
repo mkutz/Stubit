@@ -126,3 +126,19 @@ include::../../../test/java/examples/java/HttpDocTest.java[tag=request-stubbing]
 ----
 include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=request-stubbing]
 ----
+
+
+== Get Received Requests
+
+You can get the requests received by the stub via the link:{javadoc-url}/http/org/stubit/http/HttpStub.html#getReceivedRequests()[`getReceivedRequests()` method].
+
+[source,java,indent=0,role="primary"]
+.Java
+----
+include::../../../test/java/examples/java/HttpDocTest.java[tag=get_received_requests]
+----
+[source,kotlin,indent=0,role="secondary"]
+.Kotlin
+----
+include::../../../test/kotlin/examples/kotlin/HttpDocTest.kt[tag=get_received_requests]
+----

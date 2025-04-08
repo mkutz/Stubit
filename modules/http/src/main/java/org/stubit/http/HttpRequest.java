@@ -11,7 +11,7 @@ import org.jspecify.annotations.NullMarked;
  * @param body the request body
  */
 @NullMarked
-record HttpRequest(String method, URI uri, String body) {
+public record HttpRequest(String method, URI uri, String body) {
 
   @Override
   public String toString() {
