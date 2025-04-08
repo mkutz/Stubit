@@ -120,4 +120,28 @@ class HttpStubTest {
       assertThat(response.statusCode()).isEqualTo(404);
     }
   }
+
+  @Test
+  void receivedRequest() throws IOException, InterruptedException {
+    try (var httpStub = new HttpStub()) {
+      assertThat(httpStub.receivedRequests()).isEmpty();
+
+      newHttpClient()
+          .send(
+              newBuilder(URI.create("%s/things/some-key".formatted(httpStub.address())))
+                  .POST(HttpRequest.BodyPublishers.ofString("some string"))
+                  .build(),
+              HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+
+      assertThat(httpStub.receivedRequests()).hasSize(1);
+      assertThat(httpStub.receivedRequests())
+          .singleElement()
+          .satisfies(
+              request -> {
+                assertThat(request.method()).isEqualTo("POST");
+                assertThat(request.uri()).hasToString("/things/some-key");
+                assertThat(request.body()).isEqualTo("some string");
+              });
+    }
+  }
 }
