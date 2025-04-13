@@ -1,13 +1,13 @@
 name: Update Pages
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'manual/**'
   workflow_dispatch:
   workflow_call:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -31,20 +31,27 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Ensure base directory
-        run: mkdir -p pages/docs/latest
+        run: mkdir -p pages/docs
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+
+      - uses: gradle/actions/setup-gradle@v4
 
       - name: Update AsciiDoc
         run: |
-          ./gradlew asciidoc
+          ./gradlew asciidoc -Pversion=${{ github.event.inputs.version }}
           mv manual/build/docs/asciidoc/* pages/
 
       - name: Update JavaDoc
         run: |
-          ./gradlew javadoc
+          ./gradlew javadoc -Pversion=${{ github.event.inputs.version }}
           rm -rf pages/javadoc
           mkdir pages/javadoc
-          mv modules/http/build/docs/javadoc pages/javadoc/http
-          mv modules/random/build/docs/javadoc pages/javadoc/random
+          mv modules/core/build/docs/javadoc pages/javadoc/core
+          mv modules/json-jackson/build/docs/javadoc pages/javadoc/json-jackson
 
       - uses: actions/configure-pages@v5
 

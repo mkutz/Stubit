@@ -1,6 +1,17 @@
+@file:Suppress("UnstableApiUsage", "unused")
+
 plugins {
-  `stubit-module`
-  `stubit-publish`
+  `java-library`
+  jacoco
+  `jvm-test-suite`
+  `maven-publish`
+  alias(libs.plugins.jreleaser)
+}
+
+java {
+  withJavadocJar()
+  withSourcesJar()
+  toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 }
 
 repositories { mavenCentral() }
@@ -10,17 +21,25 @@ dependencies {
 
   implementation(libs.springData)
   implementation(libs.jakartaPersistenceApi)
-
-  testImplementation(platform(libs.junitBom))
-  testImplementation(libs.junitJupiterApi)
-  testImplementation(libs.junitJupiterParams)
-  testImplementation(libs.assertjCore)
-  testImplementation(project(":modules:random"))
-
-  testRuntimeOnly(libs.junitPlatformLauncher)
-  testRuntimeOnly(libs.junitJupiterEngine)
 }
 
-tasks.withType<Test> { useJUnitPlatform() }
+testing {
+  suites {
+    val test by
+      getting(JvmTestSuite::class) {
+        useJUnitJupiter()
+        dependencies {
+          implementation(platform(libs.junitBom))
+          implementation(libs.junitJupiterApi)
+          implementation(libs.junitJupiterParams)
+          implementation(libs.assertjCore)
+          implementation(project(":modules:random"))
+
+          runtimeOnly(libs.junitPlatformLauncher)
+          runtimeOnly(libs.junitJupiterEngine)
+        }
+      }
+  }
+}
 
 tasks.jacocoTestReport { reports { xml.required = true } }

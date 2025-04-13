@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage", "unused")
+
 plugins {
   alias(libs.plugins.asciidoctor)
   java
@@ -8,27 +10,33 @@ repositories { mavenCentral() }
 
 val asciidoctorExt by configurations.creating
 
-dependencies {
-  asciidoctorExt(libs.asciidoctorBlockSwitch)
-
-  testImplementation(project(":modules:http"))
-  testImplementation(project(":modules:random"))
-  testImplementation(project(":modules:spring-data"))
-
-  testImplementation(platform(libs.junitBom))
-  testImplementation(libs.junitJupiterApi)
-  testImplementation(libs.junitJupiterParams)
-  testImplementation(libs.assertjCore)
-  testImplementation(libs.okHttp)
-  testImplementation(libs.springData)
-
-  testRuntimeOnly(libs.junitPlatformLauncher)
-  testRuntimeOnly(libs.junitJupiterEngine)
-}
+dependencies { asciidoctorExt(libs.asciidoctorBlockSwitch) }
 
 java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
 
-tasks.withType<Test> { useJUnitPlatform() }
+testing {
+  suites {
+    val test by
+      getting(JvmTestSuite::class) {
+        useJUnitJupiter()
+        dependencies {
+          implementation(project(":modules:http"))
+          implementation(project(":modules:random"))
+          implementation(project(":modules:spring-data"))
+
+          implementation(platform(libs.junitBom))
+          implementation(libs.junitJupiterApi)
+          implementation(libs.junitJupiterParams)
+          implementation(libs.assertjCore)
+          implementation(libs.okHttp)
+          implementation(libs.springData)
+
+          runtimeOnly(libs.junitPlatformLauncher)
+          runtimeOnly(libs.junitJupiterEngine)
+        }
+      }
+  }
+}
 
 tasks.withType<org.asciidoctor.gradle.jvm.AsciidoctorTask> {
   baseDirFollowsSourceFile()

@@ -1,22 +1,39 @@
+@file:Suppress("UnstableApiUsage", "unused")
+
 plugins {
-  `stubit-module`
-  `stubit-publish`
+  `java-library`
+  jacoco
+  `jvm-test-suite`
+  `maven-publish`
+  alias(libs.plugins.jreleaser)
+}
+
+java {
+  withJavadocJar()
+  withSourcesJar()
+  toolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 }
 
 repositories { mavenCentral() }
 
-dependencies {
-  api(libs.jspecify)
+dependencies { api(libs.jspecify) }
 
-  testImplementation(platform(libs.junitBom))
-  testImplementation(libs.junitJupiterApi)
-  testImplementation(libs.junitJupiterParams)
-  testImplementation(libs.assertjCore)
+testing {
+  suites {
+    val test by
+      getting(JvmTestSuite::class) {
+        useJUnitJupiter()
+        dependencies {
+          implementation(platform(libs.junitBom))
+          implementation(libs.junitJupiterApi)
+          implementation(libs.junitJupiterParams)
+          implementation(libs.assertjCore)
 
-  testRuntimeOnly(libs.junitPlatformLauncher)
-  testRuntimeOnly(libs.junitJupiterEngine)
+          runtimeOnly(libs.junitPlatformLauncher)
+          runtimeOnly(libs.junitJupiterEngine)
+        }
+      }
+  }
 }
-
-tasks.withType<Test> { useJUnitPlatform() }
 
 tasks.jacocoTestReport { reports { xml.required = true } }

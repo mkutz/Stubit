@@ -1,7 +1,7 @@
 plugins {
   `java-platform`
-  `stubit-publish`
-  signing
+  `maven-publish`
+  alias(libs.plugins.jreleaser)
 }
 
 dependencies {
@@ -11,11 +11,4 @@ dependencies {
       ?.sortedBy { it.name }
       ?.forEach { api(it) }
   }
-}
-
-signing {
-  setRequired({ !version.toString().endsWith("SNAPSHOT") && gradle.taskGraph.hasTask("publish") })
-  useInMemoryPgpKeys(
-    findProperty("signingKey")?.toString(), findProperty("signingPassword")?.toString())
-  sign(publishing.publications[name])
 }
