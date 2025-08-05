@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 class CrudRepositoryStubTest {
@@ -37,6 +38,28 @@ class CrudRepositoryStubTest {
         repository.saveAll(List.of(TestEntity.randomEntity(), TestEntity.randomEntity()));
 
     assertThat(repository.findAllById(idsOf(entities))).isEqualTo(entities);
+  }
+
+  @Test
+  void saveAll_concurrent() {
+    var repository = new TestCrudRepositoryStub();
+    var entities =
+        List.of(
+            List.of(
+                TestEntity.randomEntity(), TestEntity.randomEntity(), TestEntity.randomEntity()),
+            List.of(
+                TestEntity.randomEntity(), TestEntity.randomEntity(), TestEntity.randomEntity()),
+            List.of(
+                TestEntity.randomEntity(), TestEntity.randomEntity(), TestEntity.randomEntity()),
+            List.of(
+                TestEntity.randomEntity(), TestEntity.randomEntity(), TestEntity.randomEntity()),
+            List.of(
+                TestEntity.randomEntity(), TestEntity.randomEntity(), TestEntity.randomEntity()));
+
+    entities.parallelStream().forEach(repository::saveAll);
+
+    assertThat(stream(repository.findAll().spliterator(), false).collect(Collectors.toSet()))
+        .isEqualTo(entities.stream().flatMap(List::stream).collect(Collectors.toSet()));
   }
 
   @Test
