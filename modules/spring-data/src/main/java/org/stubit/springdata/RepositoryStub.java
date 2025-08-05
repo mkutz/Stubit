@@ -1,20 +1,21 @@
 package org.stubit.springdata;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.data.repository.Repository;
 
 /**
- * Simple abstract {@link Repository} stub implementation using a {@link HashMap} to store data.
+ * Simple abstract {@link Repository} stub implementation using a {@link ConcurrentHashMap} to store
+ * data.
  *
  * @see Repository
  */
 @NullMarked
 public abstract class RepositoryStub<T, ID> implements Repository<T, ID> {
 
-  /** A {@link HashMap} to store the data. */
-  protected HashMap<ID, T> data = new HashMap<>();
+  /** A {@link ConcurrentHashMap} to store the data. */
+  protected ConcurrentHashMap<ID, T> data = new ConcurrentHashMap<>();
 
   /**
    * Extracts the {@link org.springframework.data.annotation.Id} or {@link jakarta.persistence.Id}

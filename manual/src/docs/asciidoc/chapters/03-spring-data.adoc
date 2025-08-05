@@ -115,7 +115,7 @@ include::../../../test/kotlin/examples/kotlin/SpringDataDocTest.kt[tag=verify]
 
 == Reusing a Stub
 
-Note that a link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryStub.html[`CrudRepositoryStub`] is basically a glorified `HashMap`, so we can simply create a new instance for every test.
+Note that a link:{javadoc-url}/spring-data/org/stubit/springdata/CrudRepositoryStub.html[`CrudRepositoryStub`] is basically a glorified `ConcurrentHashMap`, so we can simply create a new instance for every test.
 
 However, that might require to recreate the service as well.
 So, if we want to reuse the stub, we can simply use the `deleteAll` method to clear the stub:
