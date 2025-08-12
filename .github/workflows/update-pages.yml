@@ -50,8 +50,9 @@ jobs:
           ./gradlew javadoc -Pversion=${{ github.event.inputs.version }}
           rm -rf pages/javadoc
           mkdir pages/javadoc
-          mv modules/core/build/docs/javadoc pages/javadoc/core
-          mv modules/json-jackson/build/docs/javadoc pages/javadoc/json-jackson
+          mv modules/http/build/docs/javadoc pages/javadoc/http
+          mv modules/random/build/docs/javadoc pages/javadoc/random
+          mv modules/spring-data/build/docs/javadoc pages/javadoc/spring-data
 
       - uses: actions/configure-pages@v5
 
