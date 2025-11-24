@@ -20,4 +20,4 @@ asciidoctor = { id = "org.asciidoctor.jvm.convert", version = "4.0.5" }
 jreleaser = { id = "org.jreleaser", version = "1.21.0" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.2.21" }
 sonar = { id = "org.sonarqube", version = "7.0.1.6134" }
-spotless = { id = "com.diffplug.spotless", version = "8.0.0" }
+spotless = { id = "com.diffplug.spotless", version = "8.1.0" }
