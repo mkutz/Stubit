@@ -1,6 +1,6 @@
 [versions]
 junitVersion = "6.0.2"
-assertjVersion = "3.27.6"
+assertjVersion = "3.27.7"
 
 [libraries]
 asciidoctorBlockSwitch = { module = "io.spring.asciidoctor:spring-asciidoctor-extensions-block-switch", version = "0.6.3" }
