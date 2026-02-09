@@ -18,6 +18,6 @@ jspecify = { module = "org.jspecify:jspecify", version = "1.0.0" }
 [plugins]
 asciidoctor = { id = "org.asciidoctor.jvm.convert", version = "4.0.5" }
 jreleaser = { id = "org.jreleaser", version = "1.21.0" }
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.0" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.10" }
 sonar = { id = "org.sonarqube", version = "7.2.2.6593" }
 spotless = { id = "com.diffplug.spotless", version = "8.2.1" }
