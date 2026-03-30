@@ -58,7 +58,7 @@ jobs:
           mv modules/random/build/docs/javadoc pages/javadoc/random
           mv modules/spring-data/build/docs/javadoc pages/javadoc/spring-data
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v3
         with:
